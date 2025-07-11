@@ -1,0 +1,16 @@
+from ProcessArea import ProcessStepSpecification
+
+class PreProduct:
+    ...
+
+class Product:
+    ...
+
+class Batch:
+    ...
+
+class ProductSpecification:
+    ...
+
+class InterProductSpecification(ProcessStepSpecification):
+    ...
