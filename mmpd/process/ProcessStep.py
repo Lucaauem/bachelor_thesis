@@ -1,6 +1,10 @@
-from Operator import Operator
-from mmpd.product.PreProduct import PreProduct
-from mmpd.product.Product import Product
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from mmpd.process.Operator import Operator
+    from mmpd.product.PreProduct import PreProduct
+    from mmpd.product.Product import Product
 
 class ProcessStep:
     __operator: Operator
