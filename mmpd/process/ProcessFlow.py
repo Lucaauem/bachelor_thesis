@@ -1,4 +1,8 @@
-from ProcessStep import ProcessStep
+class ProcessFlow():
+    def __init__(self, name: str) -> None:
+        self.__name = name
 
-class ProcessFlow(ProcessStep):
-    ...
+    @property
+    def name(self) -> str:
+        return self.__name
+    
