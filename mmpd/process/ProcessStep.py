@@ -47,14 +47,17 @@ class ProcessStep:
     def next(self, next: ProcessStep) -> None:
         self.__next = next
     
-    def set_operator(self, operator: Operator) -> None:
+    @operator.setter
+    def operator(self, operator: Operator) -> None:
         self.__operator = operator
         operator.add_to_step(self)
 
-    def set_pre_product(self, pre_procut: PreProduct) -> None:
+    @pre_product.setter
+    def pre_product(self, pre_procut: PreProduct) -> None:
         self.__pre_product = pre_procut
         pre_procut.add_to_step(self)
 
-    def set_product(self, product: Product) -> None:
+    @product.setter
+    def product(self, product: Product) -> None:
         self.__product = product
         product.add_to_step(self)
