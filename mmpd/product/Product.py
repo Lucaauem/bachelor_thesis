@@ -7,13 +7,12 @@ if TYPE_CHECKING:
     from mmpd.product.ProductSpecification import ProductSpecification
 
 class Product:
-    __specifications: set[ProductSpecification]
+    __specification: ProductSpecification
     __process_steps: set[ProcessStep]
     __batch: Optional[Batch]
 
     def __init__(self) -> None:
         self.__process_steps = set()
-        self.__specifications = set()
         self.__batch = None
 
     @property
@@ -35,8 +34,9 @@ class Product:
         self.__batch = batch
 
     @property
-    def specifications(self) -> set[ProductSpecification]:
-        return self.__specifications
+    def specification(self) -> ProductSpecification:
+        return self.__specification
     
-    def add_specification(self, specification: ProductSpecification) -> None:
-        self.__specifications.add(specification)
+    @specification.setter
+    def specification(self, specification: ProductSpecification) -> None:
+        self.__specification = specification

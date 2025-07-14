@@ -20,10 +20,9 @@ def main():
     pss_1 = PreProduct()
     pp_1 = PreProduct()
 
-    ps_1 = ProductSpecification()
-    pss_1.add_specification(ps_1)
-    pp_1.add_specification(ps_1)
-    p_1.add_specification(ps_1)
+    psp = ProductSpecification()
+    p_1.specification = psp
+    p_2.specification = psp
 
     print(batch.products)
 

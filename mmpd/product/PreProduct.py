@@ -6,11 +6,8 @@ if TYPE_CHECKING:
     from mmpd.product.ProductSpecification import ProductSpecification
 
 class PreProduct:
-    __specifications: set[ProductSpecification]
+    __specification: ProductSpecification
     __process_steps: set[ProcessStep]
-
-    def __init__(self) -> None:
-        self.__specifications = set()
 
     def add_to_step(self, step: ProcessStep) -> None:
         if step in self.__process_steps:
@@ -19,9 +16,9 @@ class PreProduct:
         self.__process_steps.add(step)
 
     @property
-    def specifications(self) -> set[ProductSpecification]:
-        return self.__specifications
+    def specification(self) -> ProductSpecification:
+        return self.__specification
     
-    def add_specification(self, specification: ProductSpecification) -> None:
-        self.__specifications.add(specification)
-    
+    @specification.setter
+    def specification(self, specification: ProductSpecification) -> None:
+        self.__specification = specification
