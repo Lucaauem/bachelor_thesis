@@ -6,8 +6,8 @@
 
 # Product-specific
 [x] Product
-[ ] Pre-Product
-[ ] Product Specification
+[x] Pre-Product
+[x] Product Specification
 [x] Batch
 [ ] Inter-Product Specification
 

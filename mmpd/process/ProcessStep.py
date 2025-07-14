@@ -6,11 +6,13 @@ if TYPE_CHECKING:
     from mmpd.process.ProcessFlow import ProcessFlow
     from mmpd.product.PreProduct import PreProduct
     from mmpd.product.Product import Product
+    from mmpd.process.ProcessStepSpecification import ProcessStepSpecification
 
 class ProcessStep:
     __index: int
     __process_flow: ProcessFlow
     __operator: Operator
+    __process_step_specification: ProcessStepSpecification
     __pre_product: PreProduct
     __product: Product
     __next: ProcessStep
@@ -53,11 +55,19 @@ class ProcessStep:
         operator.add_to_step(self)
 
     @pre_product.setter
-    def pre_product(self, pre_procut: PreProduct) -> None:
-        self.__pre_product = pre_procut
-        pre_procut.add_to_step(self)
+    def pre_product(self, pre_product: PreProduct) -> None:
+        self.__pre_product = pre_product
+        pre_product.add_to_step(self)
 
     @product.setter
     def product(self, product: Product) -> None:
         self.__product = product
-        product.process_step = self
+        product.add_to_step(self)
+
+    @property
+    def specification(self) -> ProcessStepSpecification:
+        return self.__process_step_specification
+    
+    @specification.setter
+    def specification(self, specification: ProcessStepSpecification) -> None:
+        self.__process_step_specification = specification
