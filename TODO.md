@@ -1,14 +1,14 @@
 # Process-specific
-[ ] Operator
+[x] Operator
 [ ] Process Step
 [ ] Process Step Specification
 [x] Process Flow
 
 # Product-specific
-[ ] Product
+[x] Product
 [ ] Pre-Product
 [ ] Product Specification
-[ ] Batch
+[x] Batch
 [ ] Inter-Product Specification
 
 # Resource-specific

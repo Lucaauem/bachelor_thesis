@@ -60,4 +60,4 @@ class ProcessStep:
     @product.setter
     def product(self, product: Product) -> None:
         self.__product = product
-        product.add_to_step(self)
+        product.process_step = self
