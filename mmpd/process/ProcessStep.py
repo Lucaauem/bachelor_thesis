@@ -13,6 +13,7 @@ class ProcessStep:
     __operator: Operator
     __pre_product: PreProduct
     __product: Product
+    __next: ProcessStep
 
     def __init__(self, process: ProcessFlow, index: int) -> None:
         self.__index = index
@@ -37,6 +38,14 @@ class ProcessStep:
     @property
     def product(self) -> Product:
         return self.__product
+    
+    @property
+    def next(self) -> ProcessStep:
+        return self.__next
+
+    @next.setter
+    def next(self, next: ProcessStep) -> None:
+        self.__next = next
     
     def set_operator(self, operator: Operator) -> None:
         self.__operator = operator
