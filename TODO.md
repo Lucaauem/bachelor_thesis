@@ -13,7 +13,7 @@
 
 # Resource-specific
 [ ] Machine
-[ ] Shop Floor
+[x] Shop Floor
 [ ] Sensor
 [ ] Sensor Reading
 
