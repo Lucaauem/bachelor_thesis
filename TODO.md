@@ -14,6 +14,8 @@
 # Resource-specific
 [ ] Machine
 [ ] Shop Floor
+[ ] Sensor
+[ ] Sensor Reading
 
 # Views
 [ ] Process Parameter
