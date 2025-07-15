@@ -31,6 +31,7 @@ class ProcessFlow():
         self.__steps.append(new_step)
         return new_step
     
-    def step_next_step(self) -> ProcessStep:
-        self.__steps.pop(0)
-        return self.__steps[0]
+    def step_next_step(self) -> ProcessStep | None:
+        if not self.__steps:
+            return None
+        return self.__steps.pop(0)
