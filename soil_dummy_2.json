@@ -1,0 +1,171 @@
+[
+  {
+    "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurementResult",
+    "@type": [
+      "http://www.w3.org/ns/sosa/Result"
+    ],
+    "http://qudt.org/schema/qudt/unit": [
+      {
+        "@id": "http://qudt.org/vocab/unit/M"
+      }
+    ],
+    "http://schema.org/license": [
+      {
+        "@value": "All rights reserved."
+      }
+    ],
+    "http://w3id.org/nfdi4ing/metadata4ing#hasUncertaintyDeclaration": [
+      {
+        "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurementUncertainty"
+      }
+    ],
+    "http://www.w3.org/ns/sosa/isResultOf": [
+      {
+        "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurement"
+      }
+    ]
+  },
+  {
+    "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurementUncertainty",
+    "@type": [
+      "https://ptb.de/si/CoverageInterval"
+    ],
+    "http://schema.org/license": [
+      {
+        "@id": "https://spdx.org/licenses/CC-BY-NC-ND-4.0.html"
+      }
+    ],
+    "https://ptb.de/si/hasStandardUnc": [
+      {
+        "@list": [
+          {
+            "@list": [
+              {
+                "@type": "http://www.w3.org/2001/XMLSchema#float",
+                "@value": "3.2440455504743215e-09"
+              },
+              {
+                "@type": "http://www.w3.org/2001/XMLSchema#float",
+                "@value": "6.778992776553106e-09"
+              },
+              {
+                "@type": "http://www.w3.org/2001/XMLSchema#float",
+                "@value": "2.310386126860391e-09"
+              }
+            ]
+          },
+          {
+            "@list": [
+              {
+                "@type": "http://www.w3.org/2001/XMLSchema#float",
+                "@value": "7.0895718353114e-09"
+              },
+              {
+                "@type": "http://www.w3.org/2001/XMLSchema#float",
+                "@value": "5.56747927160276e-10"
+              },
+              {
+                "@type": "http://www.w3.org/2001/XMLSchema#float",
+                "@value": "2.8219969506722388e-09"
+              }
+            ]
+          },
+          {
+            "@list": [
+              {
+                "@type": "http://www.w3.org/2001/XMLSchema#float",
+                "@value": "2.513151238256859e-09"
+              },
+              {
+                "@type": "http://www.w3.org/2001/XMLSchema#float",
+                "@value": "3.5983786914529417e-10"
+              },
+              {
+                "@type": "http://www.w3.org/2001/XMLSchema#float",
+                "@value": "1.9581366115211587e-09"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurement",
+    "@type": [
+      "http://www.w3.org/ns/sosa/Observation"
+    ],
+    "http://qudt.org/schema/qudt/value": [
+      {
+        "@list": [
+          {
+            "@type": "http://www.w3.org/2001/XMLSchema#float",
+            "@value": "0.8922803608755768"
+          },
+          {
+            "@type": "http://www.w3.org/2001/XMLSchema#float",
+            "@value": "-2.090782545839404"
+          },
+          {
+            "@type": "http://www.w3.org/2001/XMLSchema#float",
+            "@value": "0.9010648863808378"
+          }
+        ]
+      }
+    ],
+    "http://schema.org/dateCreated": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+        "@value": "2025-07-14T08:50:36.472924"
+      }
+    ],
+    "http://schema.org/license": [
+      {
+        "@id": "https://spdx.org/licenses/CC-BY-NC-ND-4.0.html"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Position Measurement"
+      }
+    ],
+    "http://www.w3.org/ns/sosa/hasResult": [
+      {
+        "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurementResult"
+      }
+    ],
+    "http://www.w3.org/ns/sosa/madeBySensor": [
+      {
+        "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTarget"
+      }
+    ],
+    "http://www.w3.org/ns/sosa/observedProperty": [
+      {
+        "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTargetPosition"
+      }
+    ]
+  },
+  {
+    "@id": "_:N530c3267f1e64d769d3150a98b7a011f",
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#float",
+        "@value": "0.8922803608755768"
+      }
+    ],
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
+      {
+        "@list": [
+          {
+            "@type": "http://www.w3.org/2001/XMLSchema#float",
+            "@value": "-2.090782545839404"
+          },
+          {
+            "@type": "http://www.w3.org/2001/XMLSchema#float",
+            "@value": "0.9010648863808378"
+          }
+        ]
+      }
+    ]
+  }
+]
