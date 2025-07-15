@@ -17,4 +17,5 @@ class ShopFloor:
         self.__machines.add(machine)
 
     def add_sensor(self, sensor: Sensor) -> None:
+        assert not sensor.is_tool()
         self.__sensors.add(sensor)

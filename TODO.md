@@ -12,7 +12,7 @@
 [ ] Inter-Product Specification
 
 # Resource-specific
-[ ] Machine
+[x] Machine
 [x] Shop Floor
 [ ] Sensor
 [x] Sensor Reading

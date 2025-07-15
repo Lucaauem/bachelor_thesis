@@ -14,6 +14,7 @@ class SensorReading:
     __covariance: list
     __unit: str
     __mea_id: str
+    __raw: dict
 
     def __init__(self, json_string: str) -> None:
         data: dict = json.loads(json_string)
@@ -23,6 +24,11 @@ class SensorReading:
             setattr(self, mangled_name, value)
 
         self.__mea_id = f'{self.__uuid}@{self.__timestamp}'
+        self.__raw = data
+
+    @property
+    def raw_data(self) -> dict:
+        return self.__raw
 
     @property
     def uuid(self) -> str:

@@ -6,8 +6,15 @@ from mmpd.product.Product import Product
 from mmpd.product.PreProduct import PreProduct
 from mmpd.product.Batch import Batch
 from soil.SensorReading import SensorReading
+from soil.Sensor import Sensor
+from soil.SensorType import SensorType
+from mmpd.resource.Machine import Machine
+from mmpd.resource.ShopFloor import ShopFloor
 
 def main():
+    with open('./soil_dummy.json') as f:
+        dummy_sr = f.read()
+
     process = ProcessFlow('Test Process')
 
     p_1 = Product()
@@ -37,12 +44,43 @@ def main():
     ps_1.operator = operator
     ps_2.operator = operator
 
-    print(batch.products)
+    tool_1 = Sensor('', SensorType.TOOL)
+    tool_2 = Sensor('', SensorType.TOOL)
+    ps_1.tool = tool_2
+    ps_2.tool = tool_1
+
+    s_acc_nozzle = Sensor('', SensorType.REAL)
+    s_acc_bed = Sensor('', SensorType.REAL)
+    s_diameter = Sensor('', SensorType.REAL)
+
+    sr_acc_nozzle = SensorReading(dummy_sr)
+    sr_acc_bed = SensorReading(dummy_sr)
+    sr_diameter = SensorReading(dummy_sr)
+
+    s_acc_nozzle.add_reading(sr_acc_nozzle)
+    s_acc_bed.add_reading(sr_acc_bed)
+    s_diameter.add_reading(sr_diameter)
+
+    ps_1.add_sensor_reading(sr_acc_nozzle)
+    ps_1.add_sensor_reading(sr_acc_bed)
+    ps_1.add_sensor_reading(sr_diameter)
+    ps_2.add_sensor_reading(sr_acc_nozzle)
+    ps_2.add_sensor_reading(sr_acc_bed)
+    ps_2.add_sensor_reading(sr_diameter)
+
+    printer_1 = Machine()
+    printer_1.add_tool(tool_1)
+    printer_1.add_tool(tool_2)
+    printer_1.add_sensor(s_acc_nozzle)
+    printer_1.add_sensor(s_diameter)
+    ps_1.machine = printer_1
+    ps_2.machine = printer_1
+
+    shop_floor = ShopFloor()
+    shop_floor.add_machine(printer_1)
+
+    for reading in ps_1.all_readings:
+        print(reading.raw_data)
 
 if __name__ == '__main__':
-    with open('./soil_dummy.json') as f:
-        d = f.read()
-
-    reading = SensorReading(d)
-    print(reading.id)
-    #main()
+    main()

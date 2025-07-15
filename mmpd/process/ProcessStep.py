@@ -7,6 +7,9 @@ if TYPE_CHECKING:
     from mmpd.product.PreProduct import PreProduct
     from mmpd.product.Product import Product
     from mmpd.process.ProcessStepSpecification import ProcessStepSpecification
+    from soil.Sensor import Sensor
+    from soil.SensorReading import SensorReading
+    from mmpd.resource.Machine import Machine
 
 class ProcessStep:
     __index: int
@@ -16,10 +19,17 @@ class ProcessStep:
     __pre_product: PreProduct
     __product: Product
     __next: ProcessStep
+    __tool: Sensor
+    __sensor_readings: set[SensorReading]
+    __machine: Machine
 
     def __init__(self, process: ProcessFlow, index: int) -> None:
         self.__index = index
         self.__process_flow = process
+        self.__sensor_readings = set()
+
+    def add_sensor_reading(self, reading: SensorReading) -> None:
+        self.__sensor_readings.add(reading)
 
     @property
     def index(self) -> int:
@@ -44,6 +54,27 @@ class ProcessStep:
     @property
     def next(self) -> ProcessStep:
         return self.__next
+    
+    @property
+    def machine(self) -> Machine:
+        return self.__machine
+    
+    @machine.setter
+    def machine(self, machine: Machine) -> None:
+        self.__machine = machine
+    
+    @property
+    def tool(self) -> Sensor:
+        return self.__tool
+    
+    @property
+    def all_readings(self) -> set[SensorReading]:
+        return self.__sensor_readings
+    
+    @tool.setter
+    def tool(self, tool: Sensor) -> None:
+        assert tool.is_tool()
+        self.__tool = tool
 
     @next.setter
     def next(self, next: ProcessStep) -> None:
