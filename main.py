@@ -5,6 +5,7 @@ from mmpd.process.Operator import Operator
 from mmpd.product.Product import Product
 from mmpd.product.PreProduct import PreProduct
 from mmpd.product.Batch import Batch
+from soil.SensorReading import SensorReading
 
 def main():
     process = ProcessFlow('Test Process')
@@ -39,4 +40,9 @@ def main():
     print(batch.products)
 
 if __name__ == '__main__':
-    main()
+    with open('./soil_dummy.json') as f:
+        d = f.read()
+
+    reading = SensorReading(d)
+    print(reading.id)
+    #main()

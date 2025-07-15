@@ -15,7 +15,7 @@
 [ ] Machine
 [x] Shop Floor
 [ ] Sensor
-[ ] Sensor Reading
+[x] Sensor Reading
 
 # Views
 [ ] Process Parameter
