@@ -1,17 +1,19 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Optional
+from mmpd.ProductionObject import ProductionObject
 
 if TYPE_CHECKING:
     from mmpd.process.ProcessStep import ProcessStep
     from mmpd.product.Batch import Batch
     from mmpd.product.ProductSpecification import ProductSpecification
 
-class Product:
+class Product(ProductionObject):
     __specification: ProductSpecification
     __process_steps: set[ProcessStep]
     __batch: Optional[Batch]
 
     def __init__(self) -> None:
+        super().__init__()
         self.__process_steps = set()
         self.__batch = None
 

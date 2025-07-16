@@ -1,4 +1,4 @@
-from mmpd.process.ProcessStepSpecification import ProcessStepSpecification
+from mmpd.ProductionObject import ProductionObject
 
-class InterProductSpecification(ProcessStepSpecification):
+class InterProductSpecification(ProductionObject):
     ...

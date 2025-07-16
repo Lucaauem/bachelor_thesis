@@ -1,13 +1,15 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
+from mmpd.ProductionObject import ProductionObject
 
 if TYPE_CHECKING:
     from mmpd.product.Product import Product
 
-class Batch:
+class Batch(ProductionObject):
     __products: list[Product]
 
     def __init__(self) -> None:
+        super().__init__()
         self.__products = []
 
     @property

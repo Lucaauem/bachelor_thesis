@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 from mmpd.process.ProcessFlow import ProcessFlow
+from mmpd.ProductionObject import ProductionObject
 
 if TYPE_CHECKING:
     from mmpd.process.Operator import Operator
@@ -12,7 +13,7 @@ if TYPE_CHECKING:
     from soil.SensorReading import SensorReading
     from mmpd.resource.Machine import Machine
 
-class ProcessStep:
+class ProcessStep(ProductionObject):
     __process_flow: ProcessFlow
     __operator: Operator
     __process_step_specification: ProcessStepSpecification
@@ -23,6 +24,7 @@ class ProcessStep:
     __machine: Machine
 
     def __init__(self) -> None:
+        super().__init__()
         self.__process_flow = ProcessFlow()
         self.__sensor_readings = set()
 
