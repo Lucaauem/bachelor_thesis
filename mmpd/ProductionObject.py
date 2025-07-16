@@ -1,9 +1,9 @@
-from typing import Union
+from typing import Union, Any
 
 ALLOWED_TYPES = Union[str, int, float]
 
 class ProductionObject:
-    __attributes: dict[str, dict[str, Union[str, int, float]]]
+    __attributes: dict[str, Any]
     
     def __init__(self) -> None:
         self.__attributes = {}
@@ -12,11 +12,8 @@ class ProductionObject:
         if not isinstance(value, (str, int, float)):
             raise TypeError(f"Value {value!r} must be str, int, or float")
 
-        self.__attributes[key] = {
-            'value': value,
-            'type': type(value).__name__
-        }
+        self.__attributes[key] = value
 
     @property
-    def attributes(self) -> dict[str, dict[str, Union[str, int, float]]]:
+    def attributes(self) -> dict[str, Any]:
         return self.__attributes
