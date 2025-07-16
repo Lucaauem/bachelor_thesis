@@ -1,11 +1,9 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
-from mmpd.process.ProcessFlow import ProcessFlow
+from typing import TYPE_CHECKING, Optional
 from mmpd.ProductionObject import ProductionObject
 
 if TYPE_CHECKING:
     from mmpd.process.Operator import Operator
-    from mmpd.process.ProcessFlow import ProcessFlow
     from mmpd.product.PreProduct import PreProduct
     from mmpd.product.Product import Product
     from mmpd.process.ProcessStepSpecification import ProcessStepSpecification
@@ -14,7 +12,8 @@ if TYPE_CHECKING:
     from mmpd.resource.Machine import Machine
 
 class ProcessStep(ProductionObject):
-    __process_flow: ProcessFlow
+    __next: Optional[ProcessStep] = None
+    __previous: Optional[ProcessStep] = None
     __operator: Operator
     __process_step_specification: ProcessStepSpecification
     __pre_product: PreProduct
@@ -25,7 +24,6 @@ class ProcessStep(ProductionObject):
 
     def __init__(self) -> None:
         super().__init__()
-        self.__process_flow = ProcessFlow()
         self.__sensor_readings = set()
 
     def add_sensor_reading(self, reading: SensorReading) -> None:
@@ -33,21 +31,21 @@ class ProcessStep(ProductionObject):
 
     @property
     def next_step(self) -> ProcessStep | None:
-        return self.__process_flow.next
+        return self.__next
     
     @next_step.setter
     def next_step(self, next: ProcessStep) -> None:
-        self.__process_flow.next = next
-        next.__process_flow.previous = self
+        self.__next = next
+        next.__previous = self
 
     @property
     def previous_step(self) -> ProcessStep | None:
-        return self.__process_flow.previous
+        return self.__previous
     
     @previous_step.setter
     def previous_step(self, previous: ProcessStep) -> None:
-        self.__process_flow.previous = previous
-        previous.__process_flow.next = self
+        self.__previous = previous
+        previous.__next = self
 
     @property
     def operator(self) -> Operator:

@@ -1,4 +1,3 @@
-from mmpd.process.ProcessFlow import ProcessFlow
 from mmpd.process.ProcessStepSpecification import ProcessStepSpecification
 from mmpd.product.ProductSpecification import ProductSpecification
 from mmpd.process.Operator import Operator
