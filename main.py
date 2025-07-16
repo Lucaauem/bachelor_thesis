@@ -8,14 +8,13 @@ from mmpd.product.Batch import Batch
 from soil.SensorReading import SensorReading
 from soil.Sensor import Sensor
 from soil.SensorType import SensorType
+from mmpd.process.ProcessStep import ProcessStep
 from mmpd.resource.Machine import Machine
 from mmpd.resource.ShopFloor import ShopFloor
 
 def main():
     with open('./soil_dummy.json') as f:
         dummy_sr = f.read()
-
-    process = ProcessFlow('Test Process')
 
     p_1 = Product()
     p_2 = Product()
@@ -30,15 +29,17 @@ def main():
 
     pp_1 = PreProduct()
     pss_1 = ProcessStepSpecification()
-    ps_1 = process.add_step()
+    ps_1 = ProcessStep()
     ps_1.specification = pss_1
     ps_1.pre_product = pp_1
 
     pp_2 = PreProduct()
     pss_2 = ProcessStepSpecification()
-    ps_2 = process.add_step()
+    ps_2 = ProcessStep()
     ps_2.specification = pss_2
     ps_2.pre_product = pp_2
+
+    ps_1.next_step = ps_2
 
     operator = Operator()
     ps_1.operator = operator
@@ -78,9 +79,6 @@ def main():
 
     shop_floor = ShopFloor()
     shop_floor.add_machine(printer_1)
-
-    for reading in ps_1.all_readings:
-        print(reading.raw_data)
 
 if __name__ == '__main__':
     main()

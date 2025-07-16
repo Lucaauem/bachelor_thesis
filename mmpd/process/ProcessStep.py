@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
+from mmpd.process.ProcessFlow import ProcessFlow
 
 if TYPE_CHECKING:
     from mmpd.process.Operator import Operator
@@ -12,28 +13,39 @@ if TYPE_CHECKING:
     from mmpd.resource.Machine import Machine
 
 class ProcessStep:
-    __index: int
     __process_flow: ProcessFlow
     __operator: Operator
     __process_step_specification: ProcessStepSpecification
     __pre_product: PreProduct
     __product: Product
-    __next: ProcessStep
     __tool: Sensor
     __sensor_readings: set[SensorReading]
     __machine: Machine
 
-    def __init__(self, process: ProcessFlow, index: int) -> None:
-        self.__index = index
-        self.__process_flow = process
+    def __init__(self) -> None:
+        self.__process_flow = ProcessFlow()
         self.__sensor_readings = set()
 
     def add_sensor_reading(self, reading: SensorReading) -> None:
         self.__sensor_readings.add(reading)
 
     @property
-    def index(self) -> int:
-        return self.__index
+    def next_step(self) -> ProcessStep | None:
+        return self.__process_flow.next
+    
+    @next_step.setter
+    def next_step(self, next: ProcessStep) -> None:
+        self.__process_flow.next = next
+        next.__process_flow.previous = self
+
+    @property
+    def previous_step(self) -> ProcessStep | None:
+        return self.__process_flow.previous
+    
+    @previous_step.setter
+    def previous_step(self, previous: ProcessStep) -> None:
+        self.__process_flow.previous = previous
+        previous.__process_flow.next = self
 
     @property
     def operator(self) -> Operator:
@@ -44,16 +56,8 @@ class ProcessStep:
         return self.__pre_product
     
     @property
-    def process_flow(self) -> ProcessFlow:
-        return self.__process_flow
-    
-    @property
     def product(self) -> Product:
         return self.__product
-    
-    @property
-    def next(self) -> ProcessStep:
-        return self.__next
     
     @property
     def machine(self) -> Machine:
@@ -75,10 +79,6 @@ class ProcessStep:
     def tool(self, tool: Sensor) -> None:
         assert tool.is_tool()
         self.__tool = tool
-
-    @next.setter
-    def next(self, next: ProcessStep) -> None:
-        self.__next = next
     
     @operator.setter
     def operator(self, operator: Operator) -> None:

@@ -1,37 +1,25 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
     from mmpd.process.ProcessStep import ProcessStep
 
 class ProcessFlow():
-    __name : str
-    __steps : list[ProcessStep] # TODO Maybe swap to linked list
-
-    def __init__(self, name: str) -> None:
-        self.__name = name
-        self.__steps = []
+    __next: Optional[ProcessStep] = None
+    __previous: Optional[ProcessStep] = None
 
     @property
-    def name(self) -> str:
-        return self.__name
+    def next(self) -> ProcessStep | None:
+        return self.__next
     
+    @next.setter
+    def next(self, step: ProcessStep) -> None:
+        self.__next = step
+
     @property
-    def next_step(self) -> ProcessStep:
-        return self.__steps[0]
+    def previous(self) -> ProcessStep | None:
+        return self.__previous
     
-    def add_step(self) -> ProcessStep:
-        from mmpd.process.ProcessStep import ProcessStep
-        
-        new_step = ProcessStep(self, len(self.__steps))
-
-        if len(self.__steps) > 0:
-            self.__steps[-1].next = new_step
-
-        self.__steps.append(new_step)
-        return new_step
-    
-    def step_next_step(self) -> ProcessStep | None:
-        if not self.__steps:
-            return None
-        return self.__steps.pop(0)
+    @previous.setter
+    def previous(self, step: ProcessStep) -> None:
+        self.__previous = step
