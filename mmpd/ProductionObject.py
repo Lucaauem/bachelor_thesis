@@ -14,6 +14,9 @@ class ProductionObject:
 
         self.__attributes[key] = value
 
+    def set_attributes(self, **attributes) -> None:
+        self.__attributes = attributes
+
     @property
     def attributes(self) -> dict[str, Any]:
         return self.__attributes
