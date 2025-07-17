@@ -98,7 +98,7 @@ class ProcessStep(ProductionObject):
     def sensor_readings(self) -> list[SensorReading | None]:
         return [cast(SensorReading | None, self._model.get_object(reading)) for reading in self._uuid_sensor_readings]
     def add_sensor_reading(self, reading: SensorReading) -> None:
-        self._uuid_sensor_readings.append(reading.uuid)
+        self._uuid_sensor_readings.append(reading.id) #TODO TO CORRECT ID
         self._add_reference(self._REF_SENSOR_READINGS, reading)
 
     @property

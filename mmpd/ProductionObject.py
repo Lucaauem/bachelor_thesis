@@ -22,6 +22,27 @@ class ProductionObject:
         self._model = model
         model.add(self)
 
+    def serialize(self) -> dict:
+        attributes = {}
+        for key in self.__attributes.keys():
+            val = self.__attributes[key]
+            attributes[key] = {
+                'value': val,
+                'type': (type(val).__name__)
+            }
+
+        references = {}
+        for ref in self.__references.keys():
+            references[ref] = list(self.__references[ref])
+
+        data = {
+            'uuid' : self.__UUID,
+            'attributes' : attributes,
+            'references': references
+        }
+
+        return data
+
     def add_attribute(self, key: str, value: ALLOWED_TYPES) -> None:
         if not isinstance(value, (str, int, float)):
             raise TypeError(f"Value {value!r} must be str, int, or float")

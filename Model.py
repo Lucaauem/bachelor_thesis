@@ -10,8 +10,8 @@ class Model:
     def __init__(self):
         self._objects = set()
 
-    def serialize(self) -> list[dict]:
-        ...
+    def serialize(self) -> list:
+        return [obj.serialize() for obj in self._objects]
 
     def add(self, object: ProductionObject) -> None:
         self._objects.add(object)

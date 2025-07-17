@@ -11,6 +11,7 @@ from mmpd.process.ProcessStep import ProcessStep
 from mmpd.resource.Machine import Machine
 from mmpd.resource.ShopFloor import ShopFloor
 from Model import Model
+import json
 
 def main():
     with open('./soil_dummy.json') as f:
@@ -82,7 +83,12 @@ def main():
     shop_floor = ShopFloor('SHOP_FLOOR', model)
     shop_floor.add_machine(printer_1)
 
-    print(len(model.objects))
+    p_1.set_attributes(name='Lamp', costs=100, quality=0.73)
+
+
+    with open('./a.json', 'a') as f:
+        json.dump(model.serialize(), f)
+
 
 if __name__ == '__main__':
     main()
