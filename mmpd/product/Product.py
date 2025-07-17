@@ -12,8 +12,8 @@ class Product(ProductionObject):
     __process_steps: set[ProcessStep]
     __batch: Optional[Batch]
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, uuid: str) -> None:
+        super().__init__(uuid)
         self.__process_steps = set()
         self.__batch = None
 

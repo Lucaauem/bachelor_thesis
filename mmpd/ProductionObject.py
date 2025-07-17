@@ -3,9 +3,12 @@ from typing import Union, Any
 ALLOWED_TYPES = Union[str, int, float]
 
 class ProductionObject:
+    __UUID: str
     __attributes: dict[str, Any]
+    __references: dict[str, Any]
     
-    def __init__(self) -> None:
+    def __init__(self, uuid: str) -> None:
+        self.__UUID = uuid
         self.__attributes = {}
 
     def add_attribute(self, key: str, value: ALLOWED_TYPES) -> None:
@@ -20,3 +23,7 @@ class ProductionObject:
     @property
     def attributes(self) -> dict[str, Any]:
         return self.__attributes
+    
+    @property
+    def uuid(self) -> str:
+        return self.__UUID

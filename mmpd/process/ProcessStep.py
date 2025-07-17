@@ -22,8 +22,8 @@ class ProcessStep(ProductionObject):
     __sensor_readings: set[SensorReading]
     __machine: Machine
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, uuid: str) -> None:
+        super().__init__(uuid)
         self.__sensor_readings = set()
 
     def add_sensor_reading(self, reading: SensorReading) -> None:

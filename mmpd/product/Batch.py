@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 class Batch(ProductionObject):
     __products: list[Product]
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, uuid: str) -> None:
+        super().__init__(uuid)
         self.__products = []
 
     @property
