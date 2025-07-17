@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Union, Any
+from soil.SensorReading import SensorReading
 
 if TYPE_CHECKING:
     from mmpd.ProductionObject import ProductionObject
@@ -56,7 +57,10 @@ class ProductionObject:
         if type not in self.__references.keys():
             self.__references[type] = set()
 
-        self.__references[type].add(object.uuid)
+        if isinstance(object, SensorReading):
+            self.__references[type].add(object.id)
+        else:
+            self.__references[type].add(object.uuid)
 
     @property
     def attributes(self) -> dict[str, Any]:
