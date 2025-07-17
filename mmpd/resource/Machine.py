@@ -7,16 +7,16 @@ if TYPE_CHECKING:
     from Model import Model
 
 class Machine(ProductionObject):
-    REF_TOOLS = 'TOOLS'
-    REF_SENSORS = 'SENSORS'
+    _REF_TOOLS = 'TOOLS'
+    _REF_SENSORS = 'SENSORS'
 
     def __init__(self, uuid: str, model: Model) -> None:
         super().__init__(uuid, model)
 
     def add_tool(self, tool: Sensor) -> None:
         assert tool.is_tool()
-        self._add_reference(self.REF_TOOLS, tool)
+        self._add_reference(self._REF_TOOLS, tool)
 
     def add_sensor(self, sensor: Sensor) -> None:
         assert not sensor.is_tool()
-        self._add_reference(self.REF_SENSORS, sensor)
+        self._add_reference(self._REF_SENSORS, sensor)

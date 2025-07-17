@@ -8,15 +8,15 @@ if TYPE_CHECKING:
     from Model import Model
 
 class ShopFloor(ProductionObject):
-    REF_MACHINES = 'MACHINES'
-    REF_SENSORS = 'SENSORS'
+    _REF_MACHINES = 'MACHINES'
+    _REF_SENSORS = 'SENSORS'
 
     def __init__(self, uuid: str, model: Model) -> None:
         super().__init__(uuid, model)
 
     def add_machine(self, machine: Machine) -> None:
-        self._add_reference(self.REF_MACHINES, machine)
+        self._add_reference(self._REF_MACHINES, machine)
 
     def add_sensor(self, sensor: Sensor) -> None:
         assert not sensor.is_tool()
-        self._add_reference( self.REF_SENSORS, sensor)
+        self._add_reference( self._REF_SENSORS, sensor)

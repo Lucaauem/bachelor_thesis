@@ -4,13 +4,13 @@ from mmpd.ProductionObject import ProductionObject
 
 if TYPE_CHECKING:
     from mmpd.process.ProcessStep import ProcessStep
+    from Model import Model
 
 class Operator(ProductionObject):
-    __process_steps: set[ProcessStep]
+    _REF_STEPS = 'PROCESS_STEPS'
 
-    def __init__(self, uuid: str) -> None:
-        super().__init__(uuid)
-        self.__process_steps = set()
+    def __init__(self, uuid: str, model: Model) -> None:
+        super().__init__(uuid, model)
 
     def add_to_step(self, step: ProcessStep) -> None:
-        self.__process_steps.add(step)
+        self._add_reference(self._REF_STEPS, step)

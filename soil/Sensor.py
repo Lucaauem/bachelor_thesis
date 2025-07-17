@@ -6,6 +6,7 @@ if TYPE_CHECKING:
     from soil.SensorReading import SensorReading
 
 class Sensor:
+    _uuid: str
     __type: SensorType
     __readings: set[SensorReading]
     ...
@@ -13,6 +14,7 @@ class Sensor:
     def __init__(self, json_string: str, type: SensorType) -> None:
         self.__type = type
         self.__readings = set()
+        self._uuid = ''
 
         ...
 
@@ -21,3 +23,7 @@ class Sensor:
     
     def add_reading(self, reading: SensorReading) -> None:
         self.__readings.add(reading)
+
+    @property
+    def uuid(self) -> str:
+        return self._uuid

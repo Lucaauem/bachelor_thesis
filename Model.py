@@ -5,19 +5,23 @@ if TYPE_CHECKING:
     from mmpd.ProductionObject import ProductionObject
 
 class Model:
-    __objects: set[ProductionObject]
+    _objects: set[ProductionObject]
 
     def __init__(self):
-        self.__objects = set()
+        self._objects = set()
 
     def serialize(self) -> list[dict]:
         ...
 
     def add(self, object: ProductionObject) -> None:
-        self.__objects.add(object)
+        self._objects.add(object)
 
     def get_object(self, uuid: str) -> ProductionObject | None:
-        for obj in self.__objects:
+        for obj in self._objects:
             if obj.uuid == uuid:
                 return obj
         return None
+    
+    @property
+    def objects(self) -> set[ProductionObject]:
+        return self._objects

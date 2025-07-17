@@ -4,15 +4,14 @@ from mmpd.ProductionObject import ProductionObject
 
 if TYPE_CHECKING:
     from mmpd.process.ProcessStep import ProcessStep
+    from Model import Model
 
 class ProcessStepSpecification(ProductionObject):
-    def __init__(self, uuid: str) -> None:
-        super().__init__(uuid)
-        self.__process_steps: set[ProcessStep] = set()
+    _REF_PROCESS_STEPS = 'PROCESS_STEPS'
+
+    def __init__(self, uuid: str, model: Model) -> None:
+        super().__init__(uuid, model)
 
     def add_to_step(self, step: ProcessStep) -> None:
-        if step in self.__process_steps:
-            raise ValueError('Product already in this step')
-        
-        self.__process_steps.add(step)
+        self._add_reference(self._REF_PROCESS_STEPS, step)
         step.specification = self
