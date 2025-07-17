@@ -1,75 +1,61 @@
 import json
-from typing import Optional
 
 class SensorReading:
-    __uuid: str
-    __name: str
-    __description: str
-    __datatype: str
-    __value: list
-    __dimension: list
-    __range: list
-    __timestamp: str
-    __label: Optional[str] = None
-    __covariance: list
-    __unit: str
-    __mea_id: str
-    __raw: dict
+    _data: dict
+    _mea_id: str
 
     def __init__(self, json_string: str) -> None:
-        data: dict = json.loads(json_string)
+        self._data = json.loads(json_string)
 
-        for key, value in data.items():
-            mangled_name = f"_{self.__class__.__name__}__{key}"
-            setattr(self, mangled_name, value)
+        uuid = self._data['uuid']
+        timestamp = self._data['timestamp']
 
-        self.__mea_id = f'{self.__uuid}@{self.__timestamp}'
-        self.__raw = data
+        self._mea_id = f'{uuid}@{timestamp}'
 
     @property
-    def raw_data(self) -> dict:
-        return self.__raw
+    def data(self) -> dict:
+        return self._data
 
     @property
     def uuid(self) -> str:
-        return self.__uuid
+        return self._data['uuid']
     
     @property
     def name(self) -> str:
-        return self.__name
+        return self._data['name']
 
     @property
     def id(self) -> str:
-        return self.__mea_id
+        return self._mea_id
     
     @property
     def description(self) -> str:
-        return self.__description
+        return self._data['description']
     
     @property
     def data_type(self) -> str:
-        return self.__datatype
+        return self._data['datatype']
     
     @property
     def value(self) -> list:
-        return self.__value
+        return self._data['value']
     
     @property
     def dimension(self) -> list:
-        return self.__dimension
+        return self._data['dimension']
     
     @property
     def range(self) -> list:
-        return self.__range
+        return self._data['range']
     
     @property
     def label(self) -> str | None:
-        return self.__label
+        return self._data['label']
     
     @property
     def covariance(self) -> list:
-        return self.__covariance
+        return self._data['covariance']
     
     @property
     def unit(self) -> str:
-        return self.__unit
+        return self._data['unit']
