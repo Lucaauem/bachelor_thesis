@@ -78,7 +78,15 @@ def main():
     ps_2.machine = printer_1
 
     shop_floor = ShopFloor('SHOP_FLOOR')
-    shop_floor.add_machine(printer_1) 
+    shop_floor.add_machine(printer_1)
+
+    p_1.add_reference('product', p_2)
+
+    model = Model()
+    model.add(p_1)
+    model.add(p_2)
+    ref = list(p_1.references['product'])[0]
+    print(model.get_object(ref))
 
 if __name__ == '__main__':
     main()

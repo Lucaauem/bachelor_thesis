@@ -4,20 +4,19 @@ from mmpd.ProductionObject import ProductionObject
 
 if TYPE_CHECKING:
     from soil.Sensor import Sensor
+    from Model import Model
 
 class Machine(ProductionObject):
-    __tools : set[Sensor]
-    __sensors: set[Sensor]
+    REF_TOOLS = 'TOOLS'
+    REF_SENSORS = 'SENSORS'
 
-    def __init__(self, uuid: str) -> None:
-        super().__init__(uuid)
-        self.__tools = set()
-        self.__sensors = set()
+    def __init__(self, uuid: str, model: Model) -> None:
+        super().__init__(uuid, model)
 
     def add_tool(self, tool: Sensor) -> None:
         assert tool.is_tool()
-        self.__tools.add(tool)
+        self._add_reference(self.REF_TOOLS, tool)
 
     def add_sensor(self, sensor: Sensor) -> None:
         assert not sensor.is_tool()
-        self.__sensors.add(sensor)
+        self._add_reference(self.REF_SENSORS, sensor)

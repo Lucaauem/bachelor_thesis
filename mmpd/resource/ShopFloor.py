@@ -5,19 +5,18 @@ from mmpd.ProductionObject import ProductionObject
 if TYPE_CHECKING:
     from mmpd.resource.Machine import Machine
     from soil.Sensor import Sensor
+    from Model import Model
 
 class ShopFloor(ProductionObject):
-    __machines: set[Machine]
-    __sensors: set[Sensor]
+    REF_MACHINES = 'MACHINES'
+    REF_SENSORS = 'SENSORS'
 
-    def __init__(self, uuid: str) -> None:
-        super().__init__(uuid)
-        self.__machines = set()
-        self.__sensors = set()
+    def __init__(self, uuid: str, model: Model) -> None:
+        super().__init__(uuid, model)
 
     def add_machine(self, machine: Machine) -> None:
-        self.__machines.add(machine)
+        self._add_reference(self.REF_MACHINES, machine)
 
     def add_sensor(self, sensor: Sensor) -> None:
         assert not sensor.is_tool()
-        self.__sensors.add(sensor)
+        self._add_reference( self.REF_SENSORS, sensor)

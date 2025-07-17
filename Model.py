@@ -8,7 +8,7 @@ class Model:
     __objects: set[ProductionObject]
 
     def __init__(self):
-        self.__init__ = []
+        self.__objects = set()
 
     def serialize(self) -> list[dict]:
         ...
