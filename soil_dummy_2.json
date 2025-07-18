@@ -1,6 +1,6 @@
 [
   {
-    "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurementResult",
+    "@id": "https://purl.org/fair-Component-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurementResult",
     "@type": [
       "http://www.w3.org/ns/sosa/Result"
     ],
@@ -16,17 +16,17 @@
     ],
     "http://w3id.org/nfdi4ing/metadata4ing#hasUncertaintyDeclaration": [
       {
-        "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurementUncertainty"
+        "@id": "https://purl.org/fair-Component-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurementUncertainty"
       }
     ],
     "http://www.w3.org/ns/sosa/isResultOf": [
       {
-        "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurement"
+        "@id": "https://purl.org/fair-Component-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurement"
       }
     ]
   },
   {
-    "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurementUncertainty",
+    "@id": "https://purl.org/fair-Component-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurementUncertainty",
     "@type": [
       "https://ptb.de/si/CoverageInterval"
     ],
@@ -91,7 +91,7 @@
     ]
   },
   {
-    "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurement",
+    "@id": "https://purl.org/fair-Component-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurement",
     "@type": [
       "http://www.w3.org/ns/sosa/Observation"
     ],
@@ -131,17 +131,17 @@
     ],
     "http://www.w3.org/ns/sosa/hasResult": [
       {
-        "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurementResult"
+        "@id": "https://purl.org/fair-Component-services/apiradian/ApiradianMobileentitiesTargetPositionMeasurementResult"
       }
     ],
     "http://www.w3.org/ns/sosa/madeBySensor": [
       {
-        "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTarget"
+        "@id": "https://purl.org/fair-Component-services/apiradian/ApiradianMobileentitiesTarget"
       }
     ],
     "http://www.w3.org/ns/sosa/observedProperty": [
       {
-        "@id": "https://purl.org/fair-sensor-services/apiradian/ApiradianMobileentitiesTargetPosition"
+        "@id": "https://purl.org/fair-Component-services/apiradian/ApiradianMobileentitiesTargetPosition"
       }
     ]
   },

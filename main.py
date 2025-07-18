@@ -5,8 +5,8 @@ from mmpd.product.Product import Product
 from mmpd.product.PreProduct import PreProduct
 from mmpd.product.Batch import Batch
 from soil.SensorReading import SensorReading
-from soil.Sensor import Sensor
-from soil.SensorType import SensorType
+from soil.Component import Component
+from soil.ComponentType import ComponentType
 from mmpd.process.ProcessStep import ProcessStep
 from mmpd.resource.Machine import Machine
 from mmpd.resource.ShopFloor import ShopFloor
@@ -51,14 +51,14 @@ def main():
     ps_1.operator = operator
     ps_2.operator = operator
 
-    tool_1 = Sensor(dummy_sensor, SensorType.TOOL, model)
-    tool_2 = Sensor(dummy_sensor, SensorType.TOOL, model)
+    tool_1 = Component(dummy_sensor, ComponentType.TOOL, model)
+    tool_2 = Component(dummy_sensor, ComponentType.TOOL, model)
     ps_1.tool = tool_2
     ps_2.tool = tool_1
 
-    s_acc_nozzle = Sensor(dummy_sensor, SensorType.REAL, model)
-    s_acc_bed = Sensor(dummy_sensor, SensorType.REAL, model)
-    s_diameter = Sensor(dummy_sensor, SensorType.REAL, model)
+    s_acc_nozzle = Component(dummy_sensor, ComponentType.REAL, model)
+    s_acc_bed = Component(dummy_sensor, ComponentType.REAL, model)
+    s_diameter = Component(dummy_sensor, ComponentType.REAL, model)
 
     sr_acc_nozzle = SensorReading(dummy_sr)
     sr_acc_bed = SensorReading(dummy_sr)

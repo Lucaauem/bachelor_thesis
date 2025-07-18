@@ -1,14 +1,14 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, override
-from soil.SensorType import SensorType
+from typing import TYPE_CHECKING
+from soil.ComponentType import ComponentType
 import json
 
 if TYPE_CHECKING:
     from soil.SensorReading import SensorReading
     from Model import Model
 
-class Sensor:
-    _type: SensorType
+class Component:
+    _type: ComponentType
     _readings: set[SensorReading]
     _data: dict
     _model: Model
@@ -22,7 +22,7 @@ class Sensor:
         
         return tmp_data
 
-    def __init__(self, json_string: str, type: SensorType, model: Model) -> None:
+    def __init__(self, json_string: str, type: ComponentType, model: Model) -> None:
         self._data = json.loads(json_string)
         self._model = model
         self._type = type
@@ -30,10 +30,10 @@ class Sensor:
         model.add(self)
 
     def is_tool(self) -> bool:
-        return self._type == SensorType.TOOL
+        return self._type == ComponentType.TOOL
     
     def is_sensor(self) -> bool:
-        return self._type == SensorType.REAL or self._type == SensorType.VIRTUAL
+        return self._type == ComponentType.REAL or self._type == ComponentType.VIRTUAL
     
     def add_reading(self, reading: SensorReading) -> None:
         self._readings.add(reading)
@@ -45,5 +45,5 @@ class Sensor:
         return self._data['uuid']
     
     @property
-    def type(self) -> SensorType:
+    def type(self) -> ComponentType:
         return self._type

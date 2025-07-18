@@ -1,6 +1,6 @@
 from enum import Enum, auto
 
-class SensorType(Enum):
+class ComponentType(Enum):
     REAL = auto()
     VIRTUAL = auto()
     TOOL = auto()

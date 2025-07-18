@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, Union, Any
 if TYPE_CHECKING:
     from mmpd.ProductionObject import ProductionObject
     from Model import Model
-    from soil.Sensor import Sensor
+    from soil.Component import Component
     from soil.SensorReading import SensorReading
 
 ALLOWED_TYPES = Union[str, int, float]
@@ -52,7 +52,7 @@ class ProductionObject:
     def set_attributes(self, **attributes) -> None:
         self.__attributes = attributes
 
-    def _add_reference(self, type: str, object: ProductionObject | Sensor | SensorReading) -> None:
+    def _add_reference(self, type: str, object: ProductionObject | Component | SensorReading) -> None:
         from soil.SensorReading import SensorReading
 
         if type not in self.__references.keys():

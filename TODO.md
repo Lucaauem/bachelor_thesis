@@ -13,8 +13,8 @@
 # Resource-specific
 [x] Machine
 [x] Shop Floor
-[x] Sensor
-[x] Sensor Reading
+[x] Component
+[x] Component Reading
 
 # Views
 [ ] Process Parameter

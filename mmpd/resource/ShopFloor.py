@@ -4,7 +4,7 @@ from mmpd.ProductionObject import ProductionObject
 
 if TYPE_CHECKING:
     from mmpd.resource.Machine import Machine
-    from soil.Sensor import Sensor
+    from soil.Component import Component
     from Model import Model
 
 class ShopFloor(ProductionObject):
@@ -17,6 +17,6 @@ class ShopFloor(ProductionObject):
     def add_machine(self, machine: Machine) -> None:
         self._add_reference(self._REF_MACHINES, machine)
 
-    def add_sensor(self, sensor: Sensor) -> None:
-        assert not sensor.is_tool()
-        self._add_reference( self._REF_SENSORS, sensor)
+    def add_sensor(self, Component: Component) -> None:
+        assert not Component.is_tool()
+        self._add_reference( self._REF_SENSORS, Component)

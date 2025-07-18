@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from mmpd.ProductionObject import ProductionObject
 
 if TYPE_CHECKING:
-    from soil.Sensor import Sensor
+    from soil.Component import Component
     from Model import Model
 
 class Machine(ProductionObject):
@@ -13,10 +13,10 @@ class Machine(ProductionObject):
     def __init__(self, uuid: str, model: Model) -> None:
         super().__init__(uuid, model)
 
-    def add_tool(self, tool: Sensor) -> None:
+    def add_tool(self, tool: Component) -> None:
         assert tool.is_tool()
         self._add_reference(self._REF_TOOLS, tool)
 
-    def add_sensor(self, sensor: Sensor) -> None:
-        assert not sensor.is_tool()
-        self._add_reference(self._REF_SENSORS, sensor)
+    def add_sensor(self, Component: Component) -> None:
+        assert not Component.is_tool()
+        self._add_reference(self._REF_SENSORS, Component)

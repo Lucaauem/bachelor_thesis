@@ -7,7 +7,7 @@ if TYPE_CHECKING:
     from mmpd.product.PreProduct import PreProduct
     from mmpd.product.Product import Product
     from mmpd.process.ProcessStepSpecification import ProcessStepSpecification
-    from soil.Sensor import Sensor
+    from soil.Component import Component
     from soil.SensorReading import SensorReading
     from mmpd.resource.Machine import Machine
     from Model import Model
@@ -86,10 +86,10 @@ class ProcessStep(ProductionObject):
         self._add_reference(self._REF_PRODUCT, product)
 
     @property
-    def tool(self) -> Sensor | None:
-        return cast(Sensor | None, self._model.get_object(self._uuid_tool))
+    def tool(self) -> Component | None:
+        return cast(Component | None, self._model.get_object(self._uuid_tool))
     @tool.setter
-    def tool(self, tool: Sensor) -> None:
+    def tool(self, tool: Component) -> None:
         assert(tool.is_tool())
         self._uuid_tool = tool.uuid
         self._add_reference(self._REF_TOOL, tool)
