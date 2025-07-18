@@ -16,6 +16,7 @@ class Component:
     def serialize(self) -> dict:
         tmp_data = self._data.copy()
         tmp_data['references'] = { 'READINGS' : list() }
+        tmp_data['object_type'] = 'SOIL:COMPONENT'
 
         for reading in self._readings:
             tmp_data['references']['READINGS'].append(reading.id)

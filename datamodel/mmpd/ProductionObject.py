@@ -38,7 +38,8 @@ class ProductionObject:
         data = {
             'uuid' : self.__UUID,
             'attributes' : attributes,
-            'references': references
+            'references': references,
+            'object_type' : ('MMPD:' + self.__class__.__name__.upper())
         }
 
         return data

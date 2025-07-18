@@ -21,6 +21,7 @@ class SensorReading:
     def serialize(self) -> dict:
         tmp_data = self._data.copy()
         tmp_data['mea_id'] = self._mea_id
+        tmp_data['object_type'] = 'SOIL:SENSOR_READING'
 
         return tmp_data
 
