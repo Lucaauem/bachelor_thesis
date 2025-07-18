@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Optional
 import json
 
 if TYPE_CHECKING:
-    from Model import Model
+    from datamodel.Model import Model
 
 class SensorReading:
     _data: dict

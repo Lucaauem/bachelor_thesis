@@ -2,9 +2,9 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from mmpd.ProductionObject import ProductionObject
-    from soil.Component import Component
-    from soil.SensorReading import SensorReading
+    from datamodel.mmpd.ProductionObject import ProductionObject
+    from datamodel.soil.Component import Component
+    from datamodel.soil.SensorReading import SensorReading
 
 class Model:
     _objects: set[ProductionObject | Component | SensorReading]

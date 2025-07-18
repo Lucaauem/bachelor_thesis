@@ -1,11 +1,11 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, cast
-from mmpd.ProductionObject import ProductionObject
+from datamodel.mmpd.ProductionObject import ProductionObject
 
 if TYPE_CHECKING:
-    from mmpd.process.ProcessStep import ProcessStep
-    from mmpd.product.ProductSpecification import ProductSpecification
-    from Model import Model
+    from datamodel.mmpd.process.ProcessStep import ProcessStep
+    from datamodel.mmpd.product.ProductSpecification import ProductSpecification
+    from datamodel.Model import Model
 
 class PreProduct(ProductionObject):
     _REF_STEPS = 'PRODUCT_STEPS'

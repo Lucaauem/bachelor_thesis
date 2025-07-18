@@ -1,11 +1,11 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from mmpd.ProductionObject import ProductionObject
+from datamodel.mmpd.ProductionObject import ProductionObject
 
 if TYPE_CHECKING:
-    from mmpd.resource.Machine import Machine
-    from soil.Component import Component
-    from Model import Model
+    from datamodel.mmpd.resource.Machine import Machine
+    from datamodel.soil.Component import Component
+    from datamodel.Model import Model
 
 class ShopFloor(ProductionObject):
     _REF_MACHINES = 'MACHINES'

@@ -2,10 +2,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Union, Any
 
 if TYPE_CHECKING:
-    from mmpd.ProductionObject import ProductionObject
-    from Model import Model
-    from soil.Component import Component
-    from soil.SensorReading import SensorReading
+    from datamodel.mmpd.ProductionObject import ProductionObject
+    from datamodel.Model import Model
+    from datamodel.soil.Component import Component
+    from datamodel.soil.SensorReading import SensorReading
 
 ALLOWED_TYPES = Union[str, int, float]
 
@@ -53,7 +53,7 @@ class ProductionObject:
         self.__attributes = attributes
 
     def _add_reference(self, type: str, object: ProductionObject | Component | SensorReading) -> None:
-        from soil.SensorReading import SensorReading
+        from datamodel.soil.SensorReading import SensorReading
 
         if type not in self.__references.keys():
             self.__references[type] = set()

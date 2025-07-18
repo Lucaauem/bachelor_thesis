@@ -1,16 +1,16 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, cast
-from mmpd.ProductionObject import ProductionObject
+from datamodel.mmpd.ProductionObject import ProductionObject
 
 if TYPE_CHECKING:
-    from mmpd.process.Operator import Operator
-    from mmpd.product.PreProduct import PreProduct
-    from mmpd.product.Product import Product
-    from mmpd.process.ProcessStepSpecification import ProcessStepSpecification
-    from soil.Component import Component
-    from soil.SensorReading import SensorReading
-    from mmpd.resource.Machine import Machine
-    from Model import Model
+    from datamodel.mmpd.process.Operator import Operator
+    from datamodel.mmpd.product.PreProduct import PreProduct
+    from datamodel.mmpd.product.Product import Product
+    from datamodel.mmpd.process.ProcessStepSpecification import ProcessStepSpecification
+    from datamodel.soil.Component import Component
+    from datamodel.soil.SensorReading import SensorReading
+    from datamodel.mmpd.resource.Machine import Machine
+    from datamodel.Model import Model
 
 class ProcessStep(ProductionObject):
     _REF_NEXT_STEP = 'NEXT'

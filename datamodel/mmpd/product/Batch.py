@@ -1,10 +1,10 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, cast
-from mmpd.ProductionObject import ProductionObject
+from datamodel.mmpd.ProductionObject import ProductionObject
 
 if TYPE_CHECKING:
-    from mmpd.product.Product import Product
-    from Model import Model
+    from datamodel.mmpd.product.Product import Product
+    from datamodel.Model import Model
 
 class Batch(ProductionObject):
     _REF_PRODUCTS = 'PRODUCTS'

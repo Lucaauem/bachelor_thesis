@@ -1,16 +1,16 @@
-from mmpd.process.ProcessStepSpecification import ProcessStepSpecification
-from mmpd.product.ProductSpecification import ProductSpecification
-from mmpd.process.Operator import Operator
-from mmpd.product.Product import Product
-from mmpd.product.PreProduct import PreProduct
-from mmpd.product.Batch import Batch
-from soil.SensorReading import SensorReading
-from soil.Component import Component
-from soil.ComponentType import ComponentType
-from mmpd.process.ProcessStep import ProcessStep
-from mmpd.resource.Machine import Machine
-from mmpd.resource.ShopFloor import ShopFloor
-from Model import Model
+from datamodel.mmpd.process.ProcessStepSpecification import ProcessStepSpecification
+from datamodel.mmpd.product.ProductSpecification import ProductSpecification
+from datamodel.mmpd.process.Operator import Operator
+from datamodel.mmpd.product.Product import Product
+from datamodel.mmpd.product.PreProduct import PreProduct
+from datamodel.mmpd.product.Batch import Batch
+from datamodel.soil.SensorReading import SensorReading
+from datamodel.soil.Component import Component
+from datamodel.soil.ComponentType import ComponentType
+from datamodel.mmpd.process.ProcessStep import ProcessStep
+from datamodel.mmpd.resource.Machine import Machine
+from datamodel.mmpd.resource.ShopFloor import ShopFloor
+from datamodel.Model import Model
 import json
 
 def main():

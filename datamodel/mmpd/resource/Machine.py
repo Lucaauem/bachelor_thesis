@@ -1,10 +1,10 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from mmpd.ProductionObject import ProductionObject
+from datamodel.mmpd.ProductionObject import ProductionObject
 
 if TYPE_CHECKING:
-    from soil.Component import Component
-    from Model import Model
+    from datamodel.soil.Component import Component
+    from datamodel.Model import Model
 
 class Machine(ProductionObject):
     _REF_TOOLS = 'TOOLS'

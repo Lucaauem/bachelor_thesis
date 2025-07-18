@@ -1,11 +1,11 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from soil.ComponentType import ComponentType
+from datamodel.soil.ComponentType import ComponentType
 import json
 
 if TYPE_CHECKING:
-    from soil.SensorReading import SensorReading
-    from Model import Model
+    from datamodel.soil.SensorReading import SensorReading
+    from datamodel.Model import Model
 
 class Component:
     _type: ComponentType
