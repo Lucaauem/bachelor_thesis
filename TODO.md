@@ -1,6 +1,6 @@
 # Process-specific
 [x] Operator
-[ ] Process Step
+[x] Process Step
 [ ] Process Step Specification
 [x] Process Flow
 
@@ -9,12 +9,11 @@
 [x] Pre-Product
 [x] Product Specification
 [x] Batch
-[ ] Inter-Product Specification
 
 # Resource-specific
 [x] Machine
 [x] Shop Floor
-[ ] Sensor
+[x] Sensor
 [x] Sensor Reading
 
 # Views
