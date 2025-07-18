@@ -1,0 +1,22 @@
+{
+    "uuid" : "COM - Sensor",
+    "name" : "Temperature sensor",
+    "description" : "Sensor measuring a temperature.",
+    "profile" : "TemperatureSensor",
+    "measurements" : [
+        {
+            "uuid" : "MEA - Temperature",
+            "name" : "Temperature",
+            "description" : "Measured temperature.",
+            "profile" : "TemperatureSensorTemperature",
+            "datatype" : "float",
+            "unit" : "unit:DEG_C",
+            "dimension" : [],
+            "range" : [-5 , 40],
+            "value" : 0
+        }
+    ],
+    "parameters" : [],
+    "functions" : [],
+    "components" : []
+}

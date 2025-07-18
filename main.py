@@ -17,6 +17,9 @@ def main():
     with open('./soil_dummy.json') as f:
         dummy_sr = f.read()
 
+    with open('./soil_dummy_sensor.json') as f:
+        dummy_sensor = f.read()
+
     model = Model()
 
     p_1 = Product('P_1', model)
@@ -48,14 +51,14 @@ def main():
     ps_1.operator = operator
     ps_2.operator = operator
 
-    tool_1 = Sensor('TOOL_1', SensorType.TOOL)
-    tool_2 = Sensor('TOOL_2', SensorType.TOOL)
+    tool_1 = Sensor(dummy_sensor, SensorType.TOOL, model)
+    tool_2 = Sensor(dummy_sensor, SensorType.TOOL, model)
     ps_1.tool = tool_2
     ps_2.tool = tool_1
 
-    s_acc_nozzle = Sensor('', SensorType.REAL)
-    s_acc_bed = Sensor('', SensorType.REAL)
-    s_diameter = Sensor('', SensorType.REAL)
+    s_acc_nozzle = Sensor(dummy_sensor, SensorType.REAL, model)
+    s_acc_bed = Sensor(dummy_sensor, SensorType.REAL, model)
+    s_diameter = Sensor(dummy_sensor, SensorType.REAL, model)
 
     sr_acc_nozzle = SensorReading(dummy_sr)
     sr_acc_bed = SensorReading(dummy_sr)
