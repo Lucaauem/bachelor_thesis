@@ -11,13 +11,27 @@ from datamodel.mmpd.process.ProcessStep import ProcessStep
 from datamodel.mmpd.resource.Machine import Machine
 from datamodel.mmpd.resource.ShopFloor import ShopFloor
 from datamodel.Model import Model
+from database.DBFramework import DBFramework
+import os
 import json
 
+DUMMIES_DIR = './dummies'
+OUTPUT_DIR = './output'
+
 def main():
-    with open('./soil_dummy.json') as f:
+    model = create_dummy_model()
+
+    if not os.path.exists(OUTPUT_DIR):
+        os.makedirs(OUTPUT_DIR)
+
+    with open(f'{OUTPUT_DIR}/output.json', 'a') as f:
+        json.dump(model.serialize(), f)
+
+def create_dummy_model() -> Model:
+    with open(f'{DUMMIES_DIR}/soil_dummy_mea.json') as f:
         dummy_sr = f.read()
 
-    with open('./soil_dummy_sensor.json') as f:
+    with open(f'{DUMMIES_DIR}/soil_dummy_sensor.json') as f:
         dummy_sensor = f.read()
 
     model = Model()
@@ -88,10 +102,7 @@ def main():
 
     p_1.set_attributes(name='Lamp', costs=100, quality=0.73)
 
-
-    with open('./a.json', 'a') as f:
-        json.dump(model.serialize(), f)
-
+    return model
 
 if __name__ == '__main__':
     main()
