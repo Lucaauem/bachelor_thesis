@@ -1,4 +1,5 @@
 import paho.mqtt.client as mqtt
+from threading import Thread
 
 class Client():
     _host: str
@@ -27,4 +28,5 @@ class Client():
         client.on_connect = self._on_connect
         client.on_message = self._on_message
 
-        client.loop_forever()
+        thread = Thread(target= client.loop_forever)
+        thread.start()
