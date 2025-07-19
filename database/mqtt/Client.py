@@ -1,15 +1,18 @@
 import paho.mqtt.client as mqtt
 from threading import Thread
+from typing import Callable
 
 class Client():
     _host: str
     _port: int
     _topic: str
+    _custom_on_message: Callable
 
-    def __init__(self, host: str, port: int, topic: str) -> None:
+    def __init__(self, host: str, port: int, topic: str, on_message: Callable) -> None:
         self._host = host
         self._port = port
         self._topic = topic
+        self._custom_on_message = on_message
 
     def _on_connect(self, client, userdata, flags, rc) -> None:
         if rc == 0:
@@ -18,8 +21,10 @@ class Client():
         else:
             print(f'MQTT-Client: Failed to connect, return code {rc}')
 
+
+    # TODO Maybe cleaner?
     def _on_message(self, client, userdata, msg):
-        print(f'MQTT-Client: Message received: {msg.topic} -> {msg.payload.decode()}')
+        self._custom_on_message(msg.payload.decode())
 
     def connect(self) -> None:
         client = mqtt.Client()
