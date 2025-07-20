@@ -26,3 +26,7 @@ class DBFramework:
     # TODO: Private
     def validate(self, data: str, type: DatasetType) -> None:
         print(self._validator.validate(data, type))
+
+    @property
+    def Validator(self) -> Validator:
+        return self._validator

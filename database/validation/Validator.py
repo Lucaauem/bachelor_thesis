@@ -15,5 +15,8 @@ class Validator:
 
         self._rules = set(basic_rules)
 
+    def add_rule(self, rule: ValidationRule) -> None:
+        self._rules.add(rule)
+
     def validate(self, data: str, type: DatasetType) -> bool:
         return all(rule.validate(data, type) for rule in self._rules)
