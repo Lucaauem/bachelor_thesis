@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from database.validation.Basic import *
+from database.validation.rules.CorrectFormat import CorrectFormat
 
 if TYPE_CHECKING:
     from database.validation.ValidationRule import ValidationRule
