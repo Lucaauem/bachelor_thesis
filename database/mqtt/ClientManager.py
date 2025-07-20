@@ -1,5 +1,9 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
 from database.mqtt.Client import Client as mqttClient
-from typing import Callable
+
+if TYPE_CHECKING:
+    from typing import Callable
 
 class ClientManager():
     _clients: dict[str, mqttClient]

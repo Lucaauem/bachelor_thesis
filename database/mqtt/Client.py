@@ -1,6 +1,11 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
 import paho.mqtt.client as mqtt
 from threading import Thread
-from typing import Callable
+
+if TYPE_CHECKING:
+    from typing import Callable
+
 
 class Client():
     _host: str
