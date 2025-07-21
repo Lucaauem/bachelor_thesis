@@ -4,11 +4,13 @@ import json
 
 if TYPE_CHECKING:
     from datamodel.Model import Model
+    from datamodel.soil.Component import Component
 
 class SensorReading:
     _data: dict
     _mea_id: str
     _model: Optional[Model] = None
+    _sensor: Component
 
     def __init__(self, json_string: str) -> None:
         data = json.loads(json_string)
@@ -22,6 +24,7 @@ class SensorReading:
         tmp_data = self._data.copy()
         tmp_data['mea_id'] = self._mea_id
         tmp_data['object_type'] = 'SOIL:SENSOR_READING'
+        tmp_data['sensor'] = self._sensor.uuid
 
         return tmp_data
     
@@ -84,3 +87,13 @@ class SensorReading:
     @model.setter
     def model(self, model: Model) -> None:
         self._model = model
+
+    @property
+    def sensor(self) -> Component:
+        return self._sensor
+    
+    @sensor.setter
+    def sensor(self, sensor: Component) -> None:
+        assert sensor.is_sensor()
+
+        self._sensor = sensor

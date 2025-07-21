@@ -39,6 +39,7 @@ class Component:
     def add_reading(self, reading: SensorReading) -> None:
         self._readings.add(reading)
         reading.model = self._model
+        reading.sensor = self
         self._model.add(reading)
 
     @property
