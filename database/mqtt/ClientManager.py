@@ -15,8 +15,12 @@ class ClientManager():
         if id in self._clients.keys():
             raise ValueError('MQTT-Client: ID already in use')
         
-        client = mqttClient(host, port, topic, on_message)
+        client = mqttClient(id, host, port, topic, on_message)
         self._clients[id] = client
 
     def start_client(self, id: str) -> None:
         self._clients[id].connect()
+
+    def start_all(self) -> None:
+        for client in self._clients.keys():
+            self._clients[client].connect()

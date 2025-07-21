@@ -78,6 +78,7 @@ def create_dummy_model() -> Model:
     sr_acc_bed = SensorReading(dummy_sr)
     sr_diameter = SensorReading(dummy_sr)
 
+    """
     s_acc_nozzle.add_reading(sr_acc_nozzle)
     s_acc_bed.add_reading(sr_acc_bed)
     s_diameter.add_reading(sr_diameter)
@@ -88,6 +89,7 @@ def create_dummy_model() -> Model:
     ps_2.add_sensor_reading(sr_acc_nozzle)
     ps_2.add_sensor_reading(sr_acc_bed)
     ps_2.add_sensor_reading(sr_diameter)
+    """
 
     printer_1 = Machine('PRINTER_1', model)
     printer_1.add_tool(tool_1)
