@@ -24,6 +24,10 @@ class SensorReading:
         tmp_data['object_type'] = 'SOIL:SENSOR_READING'
 
         return tmp_data
+    
+    @property
+    def timestamp(self) -> str:
+        return self._data['timestamp']
 
     @property
     def data(self) -> dict:
