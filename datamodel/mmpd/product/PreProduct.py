@@ -32,3 +32,4 @@ class PreProduct(ProductionObject):
     def specification(self, specification: ProductSpecification) -> None:
         self._uuid_specification = specification.uuid
         self._add_reference(self._REF_SPECIFICATION, specification)
+        specification.add_to_pre_product(self)

@@ -44,6 +44,7 @@ class ProcessStep(ProductionObject):
     def next_step(self, next: ProcessStep) -> None:
         self._uuid_next = next.uuid
         self._add_reference(self._REF_NEXT_STEP, next)
+        next.previous_step = self
 
     @property
     def previous_step(self) -> ProcessStep | None:
@@ -69,6 +70,7 @@ class ProcessStep(ProductionObject):
     def specification(self, process_step_specification: ProcessStepSpecification) -> None:
         self._uuid_process_step_specification = process_step_specification.uuid
         self._add_reference(self._REF_STEP_SPECIFICATION, process_step_specification)
+        process_step_specification.add_to_step(self)
 
     @property
     def pre_product(self) -> PreProduct | None:

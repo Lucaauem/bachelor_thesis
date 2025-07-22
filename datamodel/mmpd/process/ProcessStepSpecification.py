@@ -14,4 +14,3 @@ class ProcessStepSpecification(ProductionObject):
 
     def add_to_step(self, step: ProcessStep) -> None:
         self._add_reference(self._REF_PROCESS_STEPS, step)
-        step.specification = self
