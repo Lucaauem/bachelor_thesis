@@ -60,7 +60,8 @@ class ProcessStep(ProductionObject):
     def operator(self, operator: Operator) -> None:
         self._uuid_operator = operator.uuid
         self._add_reference(self._REF_OPERATOR, operator)
-
+        operator.add_to_step(self)
+        
     @property
     def specification(self) -> ProcessStepSpecification | None:
         return cast(ProcessStepSpecification | None, self._model.get_object(self._uuid_process_step_specification))

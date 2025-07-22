@@ -52,12 +52,14 @@ def create_dummy_model() -> Model:
     ps_1 = ProcessStep('PS_1', model)
     ps_1.specification = pss_1
     ps_1.pre_product = pp_1
+    ps_1.product = p_1
 
     pp_2 = PreProduct('PP_2', model)
     pss_2 = ProcessStepSpecification('PSS_2', model)
     ps_2 = ProcessStep('PS_2', model)
     ps_2.specification = pss_2
     ps_2.pre_product = pp_2
+    ps_2.product = p_2
 
     ps_1.next_step = ps_2
 

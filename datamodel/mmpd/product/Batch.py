@@ -21,3 +21,4 @@ class Batch(ProductionObject):
     def add_product(self, product: Product) -> None:
         self._uuid_products.append(product.uuid)
         self._add_reference(self._REF_PRODUCTS, product)
+        product.batch = self
