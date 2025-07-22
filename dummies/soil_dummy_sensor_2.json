@@ -5,7 +5,7 @@
     "profile" : "TemperatureSensor",
     "measurements" : [
         {
-            "uuid" : "MEA - Temperature Backup",
+            "uuid" : "MEA-TemperatureBackup",
             "name" : "Temperature Backup",
             "description" : "Measured temperature.",
             "profile" : "TemperatureSensorTemperature",
