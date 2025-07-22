@@ -1,5 +1,5 @@
 {
-    "uuid" : "COM - Component 2",
+    "uuid" : "COM-Component2",
     "name" : "Temperature Component Backup",
     "description" : "Component measuring a temperature.",
     "profile" : "TemperatureSensor",

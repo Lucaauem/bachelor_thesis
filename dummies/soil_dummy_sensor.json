@@ -1,11 +1,11 @@
 {
-    "uuid" : "COM - Component",
+    "uuid" : "COM-Component",
     "name" : "Temperature Component",
     "description" : "Component measuring a temperature.",
     "profile" : "TemperatureSensor",
     "measurements" : [
         {
-            "uuid" : "MEA - Temperature",
+            "uuid" : "MEA-Temperature",
             "name" : "Temperature",
             "description" : "Measured temperature.",
             "profile" : "TemperatureSensorTemperature",
