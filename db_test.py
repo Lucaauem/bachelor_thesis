@@ -10,6 +10,7 @@ with open('./output/output.json') as f:
     model = f.read()
 
 fw = DBFramework()
+fw.set_graphdb('bolt://localhost:7687', 'neo4j', 'password')
 fw.set_tsdb("http://localhost:8086", "G2MjEfX9eisYzMgYtn5C_sZD4YmK_SPhS9B1ilQG8QGqa8XYdaGDNz7vykZpeeqPSXEHObPw61KrNMYF44JcBQ==", "my-org")
 
 #fw.set_model(model)

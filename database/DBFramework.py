@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from database.mqtt.ClientManager import ClientManager as MqttClientManager
 from database.db.TSDBService import TSDBService
+from database.db.GraphDBService import GraphDBService
 from database.validation.Validator import Validator
 from database.DatasetType import DatasetType
 from database.Log import log
@@ -17,6 +18,7 @@ class DBFramework:
     _validator: Validator
     _model: list[dict]
     _tsdb: TSDBService
+    _graphdb: GraphDBService
 
     def __init__(self) -> None:
         self._mqtt_clients = MqttClientManager()
@@ -29,6 +31,14 @@ class DBFramework:
             log('TSDB: Connected successfully!')
         except:
             log('TSDB: Failed to connect!')
+
+    def set_graphdb(self, url: str, user: str, password: str) -> None:
+        log('GraphDB: Connecting...')
+        try:
+            self._graphdb = GraphDBService(url, user, password)
+            log('GraphDB: Connected successfully!')
+        except:
+            log('GraphDB: Failed to connect!')
 
     def add_mqtt_client(self, id: str, topic: str, on_message: Callable) -> None:
         self._mqtt_clients.add_client(id, self._mqtt_host, self._mqtt_port, topic, on_message)
