@@ -30,9 +30,14 @@ def main():
 def create_dummy_model() -> Model:
     with open(f'{DUMMIES_DIR}/soil_dummy_mea.json') as f:
         dummy_sr = f.read()
-
     with open(f'{DUMMIES_DIR}/soil_dummy_sensor.json') as f:
         dummy_sensor = f.read()
+    with open(f'{DUMMIES_DIR}/soil_dummy_sensor_2.json') as f:
+        dummy_sensor_2 = f.read()
+    with open(f'{DUMMIES_DIR}/soil_dummy_tool.json') as f:
+        dummy_tool = f.read()
+    with open(f'{DUMMIES_DIR}/soil_dummy_tool_2.json') as f:
+        dummy_tool_2 = f.read()
 
     model = Model()
 
@@ -67,14 +72,14 @@ def create_dummy_model() -> Model:
     ps_1.operator = operator
     ps_2.operator = operator
 
-    tool_1 = Component(dummy_sensor, ComponentType.TOOL, model)
-    tool_2 = Component(dummy_sensor, ComponentType.TOOL, model)
+    tool_1 = Component(dummy_tool, ComponentType.TOOL, model)
+    tool_2 = Component(dummy_tool_2, ComponentType.TOOL, model)
     ps_1.tool = tool_2
     ps_2.tool = tool_1
 
     s_acc_nozzle = Component(dummy_sensor, ComponentType.REAL, model)
     s_acc_bed = Component(dummy_sensor, ComponentType.REAL, model)
-    s_diameter = Component(dummy_sensor, ComponentType.REAL, model)
+    s_diameter = Component(dummy_sensor_2, ComponentType.REAL, model)
 
     sr_acc_nozzle = SensorReading(dummy_sr)
     sr_acc_bed = SensorReading(dummy_sr)

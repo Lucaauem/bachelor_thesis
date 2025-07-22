@@ -1,0 +1,22 @@
+{
+    "uuid" : "COM - Component 2",
+    "name" : "Temperature Component Backup",
+    "description" : "Component measuring a temperature.",
+    "profile" : "TemperatureSensor",
+    "measurements" : [
+        {
+            "uuid" : "MEA - Temperature Backup",
+            "name" : "Temperature Backup",
+            "description" : "Measured temperature.",
+            "profile" : "TemperatureSensorTemperature",
+            "datatype" : "float",
+            "unit" : "unit:DEG_C",
+            "dimension" : [],
+            "range" : [-5 , 40],
+            "value" : 0
+        }
+    ],
+    "parameters" : [],
+    "functions" : [],
+    "components" : []
+}

@@ -1,0 +1,10 @@
+{
+    "uuid" : "COM - Tool 2",
+    "name" : "Temperature Component",
+    "description" : "Component measuring a temperature.",
+    "profile" : "TemperatureSensor",
+    "measurements" : [],
+    "parameters" : [],
+    "functions" : [],
+    "components" : []
+}
