@@ -21,10 +21,13 @@ class SensorReading:
         self._mea_id = f'{uuid}@{timestamp}'
 
     def serialize(self) -> dict:
-        tmp_data = self._data.copy()
-        tmp_data['mea_id'] = self._mea_id
-        tmp_data['object_type'] = 'SOIL:SENSOR_READING'
-        tmp_data['sensor'] = self._sensor.uuid
+        tmp_data = {
+            'uuid': self._data['uuid'],
+            'mea_id': self._mea_id,
+            'data': self._data.copy(),
+            'object_type' : 'SOIL:SENSOR_READING',
+            'sensor': self._sensor.uuid
+        }
 
         return tmp_data
     

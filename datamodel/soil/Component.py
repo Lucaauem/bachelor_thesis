@@ -14,9 +14,12 @@ class Component:
     _model: Model
 
     def serialize(self) -> dict:
-        tmp_data = self._data.copy()
-        tmp_data['references'] = { 'READINGS' : list() }
-        tmp_data['object_type'] = 'SOIL:COMPONENT'
+        tmp_data = {
+            'uuid': self._data['uuid'],
+            'data': self._data.copy(),
+            'references' : { 'READINGS' : list() },
+            'object_type': 'SOIL:COMPONENT'
+        }
 
         for reading in self._readings:
             tmp_data['references']['READINGS'].append(reading.id)

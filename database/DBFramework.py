@@ -49,7 +49,9 @@ class DBFramework:
             raise SyntaxError('Datamodel: Not valid!')
 
         log('Datamodel: Valid!')
-        self._model = json.loads(model)
+        log('Datamodel: Storing in Database...')
+        self._graphdb.insert_model(json.loads(model))
+        log('Datamodel: Stored in Database!')
 
     def launch(self) -> None:
         self._mqtt_clients.start_all()

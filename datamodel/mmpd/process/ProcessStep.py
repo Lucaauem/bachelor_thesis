@@ -59,7 +59,7 @@ class ProcessStep(ProductionObject):
     @operator.setter
     def operator(self, operator: Operator) -> None:
         self._uuid_operator = operator.uuid
-        self._add_reference(self._REF_PREV_STEP, operator)
+        self._add_reference(self._REF_OPERATOR, operator)
 
     @property
     def specification(self) -> ProcessStepSpecification | None:
