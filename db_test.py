@@ -10,8 +10,10 @@ with open('./output/output.json') as f:
     model = f.read()
 
 fw = DBFramework()
-fw.add_mqtt_client('CLIENT_0', 'COM-APIRadian/COM-MobileEntities/COM-Target/MEA-Position', print_msg)
-fw.set_model(model)
+fw.set_tsdb("http://localhost:8086", "G2MjEfX9eisYzMgYtn5C_sZD4YmK_SPhS9B1ilQG8QGqa8XYdaGDNz7vykZpeeqPSXEHObPw61KrNMYF44JcBQ==", "my-org")
+
+#fw.set_model(model)
+#fw.add_mqtt_client('CLIENT_0', 'COM-APIRadian/COM-MobileEntities/COM-Target/MEA-Position', print_msg)
 
 fw.launch()
 
