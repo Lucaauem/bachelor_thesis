@@ -5,6 +5,9 @@ from database.Log import log
 from database.db.DBManager import DBManager
 from datamodel.soil.ComponentType import ComponentType
 from database.sensors.SensorManager import SensorManager
+from datamodel.soil.SensorReading import SensorReading
+from datamodel.Model import Model
+from datamodel.soil.Component import Component
 import json
 
 class DBFramework:
@@ -12,7 +15,7 @@ class DBFramework:
     _mqtt_port: int = 1884 # TODO Read from file
     _mqtt_clients: MqttClientManager
     _validator: Validator
-    _model: list[dict]
+    _model: Model
     _db_manager: DBManager
     _sensor_manager: SensorManager
     
@@ -33,8 +36,23 @@ class DBFramework:
         
         uuid, data = sensor_data
         log(f'Sensor [{uuid}]: New measurement!')
+
+        # Update model
+        log(f'Updating model...')
+        sensor = self._model.get_object(uuid)
+        assert sensor is not None and isinstance(sensor, Component)
+        reading = SensorReading(json.dumps(data))
+        sensor.add_reading(reading)
+
+        # TODO Validation
+        
         log(f'Sensor [{uuid}]: Storing measurement...')
-        self._db_manager.active_graphdb.add_sensor_reading(uuid, data)
+        self._db_manager.active_graphdb.add_sensor_reading(reading)
+
+        log(f'Stored measurement!')
+
+        with open('./output.json', 'w') as f:
+            json.dump(self._model.serialize(), f, indent=2)
 
     def set_model(self, model: str) -> None:
         log('Datamodel: Validating...')
@@ -44,7 +62,8 @@ class DBFramework:
         log('Datamodel: Valid!')
         log('Datamodel: Storing in Database...')
         parsed_model = json.loads(model)
-        self._db_manager.active_graphdb.insert_model(parsed_model)
+        self._model = Model.parse(parsed_model)
+        self._db_manager.active_graphdb.insert_model(self._model.serialize())
         log('Datamodel: Stored in Database!')
 
         log('Sensors: Loading sensors from model...')

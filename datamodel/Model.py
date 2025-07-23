@@ -79,5 +79,6 @@ class Model:
             reading = SensorReading(json.dumps(mea['data']))
             reading.sensor = sensor
             reading.model = datamodel
+            datamodel.add(reading)
 
         return datamodel
