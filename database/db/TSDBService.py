@@ -7,18 +7,30 @@ from datamodel.soil.SensorReading import SensorReading
 class TSDBService():
     _DATA_BUCKET = 'sensor_data'
 
-    _client: InfluxDBClient
+    _url: str
+    _token: str
     _org: str
+    _client: InfluxDBClient | None = None
 
     def __init__(self, url: str, token: str, org: str) -> None:
-        client = InfluxDBClient(url=url, token=token, org=org)
-        self._client = client
+        self._url = url
+        self._token = token
         self._org = org
 
+    def connect(self) -> None:
+        assert self._client is None
+        client = InfluxDBClient(url=self._url, token=self._token, org=self._org)
+        self._client = client
+
         if not client.buckets_api().find_bucket_by_name(self._DATA_BUCKET):
-            client.buckets_api().create_bucket(bucket_name=self._DATA_BUCKET, org=org)
+            client.buckets_api().create_bucket(bucket_name=self._DATA_BUCKET, org=self._org)
+
+    def disconnect(self) -> None:
+        assert self._client is not None
+        self._client.close()
 
     def add_measurement(self, measurement: SensorReading) -> None:
+        assert self._client is not None
         point = Point(measurement.uuid).time(measurement.timestamp)
 
         # TODO Check if list in list is possible

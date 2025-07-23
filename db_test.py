@@ -1,7 +1,4 @@
 from database.DBFramework import DBFramework
-from database.DatasetType import DatasetType
-from database.db.TSDBService import TSDBService
-from datamodel.soil.SensorReading import SensorReading
 
 def print_msg(msg: str):
     print(msg)
@@ -10,13 +7,15 @@ with open('./output/output.json') as f:
     model = f.read()
 
 fw = DBFramework()
-fw.set_graphdb('bolt://localhost:7687', 'neo4j', 'password')
-fw.set_tsdb("http://localhost:8086", "G2MjEfX9eisYzMgYtn5C_sZD4YmK_SPhS9B1ilQG8QGqa8XYdaGDNz7vykZpeeqPSXEHObPw61KrNMYF44JcBQ==", "my-org")
+fw.DB.add_tsdb('TSDB_1', "http://localhost:8086", "G2MjEfX9eisYzMgYtn5C_sZD4YmK_SPhS9B1ilQG8QGqa8XYdaGDNz7vykZpeeqPSXEHObPw61KrNMYF44JcBQ==", "my-org")
+fw.DB.add_graphdb('GRAPH_1', 'bolt://localhost:7687', 'neo4j', 'password')
+fw.DB.set_tsdb('TSDB_1')
+fw.DB.set_graphdb('GRAPH_1')
 
 fw.set_model(model)
 #fw.add_mqtt_client('CLIENT_0', 'COM-APIRadian/COM-MobileEntities/COM-Target/MEA-Position', print_msg)
 
-fw.launch()
+#fw.launch()
 
 #with open('./dummies/soil_dummy_mea.json') as f:
 #    dummy_sr = f.read()
