@@ -14,7 +14,13 @@ class ProductionObject:
     __attributes: dict[str, Any]
     __references: dict[str, set[str]]
     _model: Model
-    
+
+    def add_attr_raw(self, attributes: dict[str, Any]) -> None:
+        self.__attributes = attributes
+
+    def add_ref_raw(self, ref: dict[str, set[str]]) -> None:
+        self.__references = ref
+
     def __init__(self, uuid: str, model: Model) -> None:
         self.__UUID = uuid
         self.__attributes = {}
