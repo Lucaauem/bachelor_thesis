@@ -11,6 +11,9 @@ class SensorManager:
         if len(data) == 0:
             return
         
+        if 'value' not in data.keys(): # Sensor description
+            return
+        
         sensor_uuid = data['uuid'].split('/')[0]
         return (sensor_uuid, data)
 

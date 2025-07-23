@@ -1,4 +1,5 @@
 from py2neo import Graph, Node, Relationship
+from database.Log import log
 import json
 
 class GraphDBService:
@@ -30,7 +31,7 @@ class GraphDBService:
 
     def add_sensor_reading(self, sensor_uuid: str, data: dict) -> None:
         assert self._graph is not None
-        
+        log(f'Sensor [{sensor_uuid}]: Storing measurement in GraphDB...')
         data['id'] = f'{data['uuid']}@{data['timestamp']}'
 
         node_data = {
@@ -45,7 +46,7 @@ class GraphDBService:
         rel = Relationship(sensor_node, 'MEASURED', reading_node)
         self._graph.merge(rel)
 
-        print(f'SENSOR [{sensor_uuid}]: New measurement!')
+        log(f'Sensor [{sensor_uuid}]: Stored measurement in GraphDB!')
 
     def _insert_object(self, obj: dict) -> None:
         assert self._graph is not None

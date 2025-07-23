@@ -1,7 +1,7 @@
 # Process-specific
 [x] Operator
 [x] Process Step
-[ ] Process Step Specification
+[x] Process Step Specification
 [x] Process Flow
 
 # Product-specific
