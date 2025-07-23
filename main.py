@@ -38,6 +38,8 @@ def create_dummy_model() -> Model:
         dummy_tool = f.read()
     with open(f'{DUMMIES_DIR}/soil_dummy_tool_2.json') as f:
         dummy_tool_2 = f.read()
+    with open('sensors/lasertracker.json') as f:
+        lasertracker = f.read()
 
     model = Model()
 
@@ -77,9 +79,10 @@ def create_dummy_model() -> Model:
     ps_1.tool = tool_2
     ps_2.tool = tool_1
 
-    s_acc_nozzle = Component(dummy_sensor, ComponentType.REAL, model)
-    s_acc_bed = Component(dummy_sensor, ComponentType.REAL, model)
-    s_diameter = Component(dummy_sensor_2, ComponentType.REAL, model)
+    #s_acc_nozzle = Component(dummy_sensor, ComponentType.REAL, model)
+    #s_acc_bed = Component(dummy_sensor, ComponentType.REAL, model)
+    #s_diameter = Component(dummy_sensor_2, ComponentType.REAL, model)
+    s_lasertracker = Component(lasertracker, ComponentType.REAL, model)
 
     sr_acc_nozzle = SensorReading(dummy_sr)
     sr_acc_bed = SensorReading(dummy_sr)
@@ -101,8 +104,9 @@ def create_dummy_model() -> Model:
     printer_1 = Machine('PRINTER_1', model)
     printer_1.add_tool(tool_1)
     printer_1.add_tool(tool_2)
-    printer_1.add_sensor(s_acc_nozzle)
-    printer_1.add_sensor(s_diameter)
+    #printer_1.add_sensor(s_acc_nozzle)
+    #printer_1.add_sensor(s_diameter)
+    printer_1.add_sensor(s_lasertracker)
     ps_1.machine = printer_1
     ps_2.machine = printer_1
 
