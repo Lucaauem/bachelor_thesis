@@ -24,8 +24,8 @@ def main():
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
 
-    with open(f'{OUTPUT_DIR}/output.json', 'a') as f:
-        json.dump(model.serialize(), f)
+    with open(f'{OUTPUT_DIR}/output.json', 'w') as f:
+        json.dump(model.serialize(), f, indent=2)
 
 def create_dummy_model() -> Model:
     with open(f'{DUMMIES_DIR}/soil_dummy_mea.json') as f:

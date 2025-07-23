@@ -13,9 +13,9 @@ fw.DB.set_tsdb('TSDB_1')
 fw.DB.set_graphdb('GRAPH_1')
 
 fw.set_model(model)
-#fw.add_mqtt_client('CLIENT_0', 'COM-APIRadian/COM-MobileEntities/COM-Target/MEA-Position', print_msg)
+fw.add_mqtt_client('CLIENT_0')
 
-#fw.launch()
+fw.launch()
 
 #with open('./dummies/soil_dummy_mea.json') as f:
 #    dummy_sr = f.read()

@@ -18,7 +18,8 @@ class Component:
             'uuid': self._data['uuid'],
             'data': self._data.copy(),
             'references' : { 'READINGS' : list() },
-            'object_type': 'SOIL:COMPONENT'
+            'object_type': 'SOIL:COMPONENT',
+            'component_type': self._type.name
         }
 
         for reading in self._readings:

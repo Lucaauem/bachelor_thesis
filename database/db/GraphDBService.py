@@ -28,6 +28,25 @@ class GraphDBService:
         for obj in model:
             self._create_relation(obj, model)
 
+    def add_sensor_reading(self, sensor_uuid: str, data: dict) -> None:
+        assert self._graph is not None
+        
+        data['id'] = f'{data['uuid']}@{data['timestamp']}'
+
+        node_data = {
+            'id' : data['id'],
+            'data' : json.dumps(data)
+        }
+
+        sensor_node = self._graph.nodes.match('SOIL:COMPONENT', id=sensor_uuid).first()
+        reading_node = Node('SOIL:SENSOR_READING', **node_data)
+        self._graph.merge(reading_node, 'SOIL:SENSOR_READING', 'id')
+
+        rel = Relationship(sensor_node, 'MEASURED', reading_node)
+        self._graph.merge(rel)
+
+        print(f'SENSOR [{sensor_uuid}]: New measurement!')
+
     def _insert_object(self, obj: dict) -> None:
         assert self._graph is not None
         obj_type = obj['object_type']
