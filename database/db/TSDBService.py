@@ -3,6 +3,7 @@ from influxdb_client.client.write.point import Point
 from influxdb_client.client.write_api import SYNCHRONOUS
 from influxdb_client.client.bucket_api import BucketsApi
 from datamodel.soil.SensorReading import SensorReading
+from datetime import datetime, timezone
 
 class TSDBService():
     _DATA_BUCKET = 'sensor_data'
@@ -29,12 +30,12 @@ class TSDBService():
         assert self._client is not None
         self._client.close()
 
-    def add_measurement(self, measurement: SensorReading) -> None:
+    def add_measurement(self, uuid:str, timestamp: str, value: list) -> None:
         assert self._client is not None
-        point = Point(measurement.uuid).time(measurement.timestamp)
+        point = Point('sensor_reading').tag('uuid', uuid).time(datetime.now(timezone.utc).isoformat())
 
         # TODO Check if list in list is possible
-        for i, val in enumerate(measurement.value):
+        for i, val in enumerate(value):
             point.field(f"value_{i}", val)
 
         write_api = self._client.write_api(write_options=SYNCHRONOUS)

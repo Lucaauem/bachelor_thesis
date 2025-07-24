@@ -34,6 +34,8 @@ class DBFramework:
         
         uuid, data = sensor_data
         log(f'Sensor [{uuid}]: New measurement!')
+        value = data['value']
+        del data['value']
 
         # Update model
         log(f'Updating model...')
@@ -46,6 +48,7 @@ class DBFramework:
         
         log(f'Sensor [{uuid}]: Storing measurement...')
         self._db_manager.active_graphdb.add_sensor_reading(reading)
+        self._db_manager.active_tsdb.add_measurement(reading.uuid, reading.timestamp, value)
 
         log(f'Stored measurement!')
 

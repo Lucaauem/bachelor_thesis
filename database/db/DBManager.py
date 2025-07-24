@@ -70,7 +70,7 @@ class DBManager:
     @property
     def active_tsdb(self) -> TSDBService:
         assert len(self._active_tsdb) > 0
-        return self._tsdb[self._active_graphdb]
+        return self._tsdb[self._active_tsdb]
     
     @property
     def active_graphdb(self) -> GraphDBService:
