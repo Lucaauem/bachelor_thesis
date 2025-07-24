@@ -51,9 +51,6 @@ class DBFramework:
 
         log(f'Stored measurement!')
 
-        with open('./output.json', 'w') as f:
-            json.dump(self._model.serialize(), f, indent=2)
-
     def set_model(self, model: str) -> None:
         log('Datamodel: Validating...')
         if not self._validator.validate(model, DatasetType.DATAMODEL):

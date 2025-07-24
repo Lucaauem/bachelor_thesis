@@ -2,3 +2,4 @@ paho-mqtt
 influxdb-client
 neo4j
 py2neo
+toml

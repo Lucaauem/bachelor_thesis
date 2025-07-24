@@ -1,6 +1,7 @@
 from database.Log import log
 from database.db.GraphDBService import GraphDBService
 from database.db.TSDBService import TSDBService
+import toml
 
 class DBManager:
     _graphdb: dict[str, GraphDBService]
@@ -12,17 +13,23 @@ class DBManager:
         self._graphdb = {}
         self._tsdb = {}
 
-    def add_tsdb(self, id: str, url: str, token: str, org: str) -> None:
-        if id in self._tsdb.keys():
-            raise ValueError(f'TSDB "{id}" already exists!')
+    def add_tsdb(self, toml_path: str) -> str:
+        with open(toml_path) as f:
+            file = toml.load(f)
 
-        self._tsdb[id] = TSDBService(url, token, org)
+        id = f'TSDB_{len(self._tsdb.keys())}'
+        self._tsdb[id] = TSDBService(file['url'], file['token'], file['org'])
 
-    def add_graphdb(self, id: str, url: str, user: str, password: str) -> None:
-        if id in self._graphdb.keys():
-            raise ValueError(f'GraphDB "{id}" already exists!')
+        return id
 
-        self._graphdb[id] = GraphDBService(url, user, password)
+    def add_graphdb(self, toml_path: str) -> str:
+        with open(toml_path) as f:
+            file = toml.load(f)
+
+        id = f'GRAPHDB_{len(self._graphdb.keys())}'
+        self._graphdb[id] = GraphDBService(file['url'], file['user'], file['password'])
+
+        return id
 
     def set_tsdb(self, id: str) -> None:
         if id not in self._tsdb.keys():

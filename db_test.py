@@ -7,10 +7,10 @@ with open('./output/output.json') as f:
     model = f.read()
 
 fw = DBFramework()
-fw.DB.add_tsdb('TSDB_1', "http://localhost:8086", "G2MjEfX9eisYzMgYtn5C_sZD4YmK_SPhS9B1ilQG8QGqa8XYdaGDNz7vykZpeeqPSXEHObPw61KrNMYF44JcBQ==", "my-org")
-fw.DB.add_graphdb('GRAPH_1', 'bolt://localhost:7687', 'neo4j', 'password')
-fw.DB.set_tsdb('TSDB_1')
-fw.DB.set_graphdb('GRAPH_1')
+tsdb = fw.DB.add_tsdb('./components/databases/influx.toml')
+graphdb = fw.DB.add_graphdb('./components/databases/neo.toml')
+fw.DB.set_tsdb(tsdb)
+fw.DB.set_graphdb(graphdb)
 
 fw.set_model(model)
 fw.add_mqtt_client('CLIENT_0')
