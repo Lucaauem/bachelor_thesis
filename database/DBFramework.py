@@ -8,6 +8,7 @@ from database.sensors.SensorManager import SensorManager
 from datamodel.soil.SensorReading import SensorReading
 from datamodel.Model import Model
 from datamodel.soil.Component import Component
+from database.callbacks.CallbackHandler import CallbackHandler
 import json
 
 class DBFramework:
@@ -18,12 +19,14 @@ class DBFramework:
     _model: Model
     _db_manager: DBManager
     _sensor_manager: SensorManager
+    _callback_handler: CallbackHandler
     
     def __init__(self) -> None:
         self._mqtt_clients = MqttClientManager()
         self._validator = Validator()
         self._db_manager = DBManager()
         self._sensor_manager = SensorManager()
+        self._callback_handler = CallbackHandler()
 
     def add_mqtt_client(self, id: str) -> None:
         self._mqtt_clients.add_client(id, self._mqtt_host, self._mqtt_port, '#', self.mqtt_received)
@@ -82,3 +85,7 @@ class DBFramework:
     @property
     def DB(self) -> DBManager:
         return self._db_manager
+    
+    @property
+    def Callbacks(self) -> CallbackHandler:
+        return self._callback_handler
