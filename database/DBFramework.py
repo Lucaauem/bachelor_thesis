@@ -12,8 +12,6 @@ from database.callbacks.CallbackHandler import CallbackHandler
 import json
 
 class DBFramework:
-    _mqtt_host: str = 'localhost' # TODO Read from file
-    _mqtt_port: int = 1884 # TODO Read from file
     _mqtt_clients: MqttClientManager
     _validator: Validator
     _model: Model
@@ -22,14 +20,11 @@ class DBFramework:
     _callback_handler: CallbackHandler
     
     def __init__(self) -> None:
-        self._mqtt_clients = MqttClientManager()
+        self._mqtt_clients = MqttClientManager(self.mqtt_received)
         self._validator = Validator()
         self._db_manager = DBManager()
         self._sensor_manager = SensorManager()
         self._callback_handler = CallbackHandler()
-
-    def add_mqtt_client(self, id: str) -> None:
-        self._mqtt_clients.add_client(id, self._mqtt_host, self._mqtt_port, '#', self.mqtt_received)
 
     def mqtt_received(self, msg: str) -> None:
         sensor_data = self._sensor_manager.on_new_data(msg)
@@ -89,3 +84,7 @@ class DBFramework:
     @property
     def Callbacks(self) -> CallbackHandler:
         return self._callback_handler
+    
+    @property
+    def MQTT(self) -> MqttClientManager:
+        return self._mqtt_clients
