@@ -1,9 +1,19 @@
+from datamodel.soil.Component import Component
+from datamodel.soil.ComponentType import ComponentType
+from database.Log import log
 import json
 
 class SensorManager:
-    def add_sensor(self, sensor: str) -> None:
-        #print(sensor)
-        ...
+    _sensors: dict[str, Component]
+
+    def __init__(self) -> None:
+        self._sensors = {}
+
+    def add_sensor(self, sensor: dict) -> None:
+        component = Component(json.dumps(sensor), ComponentType.REAL, None)
+        self._sensors[component.uuid] = component
+        
+        log(f'Sensors: Added "{component.uuid}"')
 
     def on_new_data(self, raw_data: str) -> tuple[str, dict] | None:
         data = self._parse_data(raw_data)

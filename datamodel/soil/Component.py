@@ -27,12 +27,14 @@ class Component:
         
         return tmp_data
 
-    def __init__(self, json_string: str, type: ComponentType, model: Model) -> None:
+    def __init__(self, json_string: str, type: ComponentType, model: Model|None=None) -> None:
         self._data = json.loads(json_string)
-        self._model = model
         self._type = type
         self._readings = set()
-        model.add(self)
+        
+        if model is not None:
+            self._model = model
+            model.add(self)
 
     def is_tool(self) -> bool:
         return self._type == ComponentType.TOOL

@@ -70,7 +70,6 @@ class DBFramework:
         log('Sensors: Loading sensors from model...')
         for obj in parsed_model:
             if obj['object_type'] == 'SOIL:COMPONENT' and obj['component_type'] == ComponentType.REAL.name:
-                log(f'Sensors: Added "{obj['uuid']}"')
                 self._sensor_manager.add_sensor(obj['data'])
 
     def launch(self) -> None:

@@ -63,7 +63,7 @@ class Model:
 
             if obj_type == 'SOIL:COMPONENT' :
                 Component(json.dumps(obj['data']), ComponentType[obj['component_type']], datamodel)
-            else:
+            elif obj_type != 'SOIL:SENSOR_READING':
                 cls = PARSE_CONVERSION[obj_type]()
                 instance: ProductionObject = cls(obj['uuid'], datamodel)
                 instance.add_attr_raw(obj['attributes'])

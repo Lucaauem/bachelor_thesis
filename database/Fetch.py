@@ -28,7 +28,7 @@ class Fetch:
             if node is None:
                 continue
 
-            print(dict(node)['id'])
+            #print(dict(node)['id'])
 
             node = dict(node)['data']
             node = json.loads(str(node))
