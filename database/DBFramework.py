@@ -25,35 +25,32 @@ class DBFramework:
         self._mqtt_clients = MqttClientManager(self._mqtt_received)
         self._validator = Validator()
         self._db_manager = DBManager()
-        self._sensor_manager = SensorManager()
+        self._sensor_manager = SensorManager(self._db_manager)
         self._callback_handler = CallbackHandler()
-        self._fetch = Fetch(self._db_manager)
+        self._fetch = Fetch(self)
 
     def _mqtt_received(self, msg: str) -> None:
-        sensor_data = self._sensor_manager.on_new_data(msg)
+        is_correct, uuid, data = self._sensor_manager.is_correct_reading(msg)
 
-        if sensor_data is None:
+        # Check if reading data is correct
+        if not is_correct:
             return
-        
-        uuid, data = sensor_data
+        assert (sensor := self._model.get_object(uuid)) is not None and isinstance(sensor, Component)
+
         log(f'Sensor [{uuid}]: New measurement!')
+
+        # TODO: Move to add_measurement?
         value = data['value']
         del data['value']
 
         # Update model
-        log(f'Updating model...')
-        sensor = self._model.get_object(uuid)
-        assert sensor is not None and isinstance(sensor, Component)
         reading = SensorReading(json.dumps(data))
+        self._sensor_manager.get_sensor(uuid).add_measurement(reading, value)
         sensor.add_reading(reading)
 
         # TODO Validation
-        
-        log(f'Sensor [{uuid}]: Storing measurement...')
-        self._db_manager.active_graphdb.add_sensor_reading(reading)
-        self._db_manager.active_tsdb.add_measurement(reading.uuid, reading.timestamp, value)
 
-        log(f'Stored measurement!')
+        log(f'Sensor [{uuid}]: Stored measurement!')
 
     def set_model(self, model: str) -> None:
         log('Datamodel: Validating...')
@@ -64,7 +61,7 @@ class DBFramework:
         log('Datamodel: Storing in Database...')
         parsed_model = json.loads(model)
         self._model = Model.parse(parsed_model)
-        self._db_manager.active_graphdb.insert_model(self._model.serialize())
+        self._db_manager.active_graphdb.insert_model(self._model.serialize(), self)
         log('Datamodel: Stored in Database!')
 
         log('Sensors: Loading sensors from model...')
@@ -96,6 +93,10 @@ class DBFramework:
     @property
     def MQTT(self) -> MqttClientManager:
         return self._mqtt_clients
+    
+    @property
+    def Sensors(self) -> SensorManager:
+        return self._sensor_manager
     
     @property
     def Fetch(self) -> Fetch:

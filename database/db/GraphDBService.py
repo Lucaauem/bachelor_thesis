@@ -6,6 +6,7 @@ import json
 
 if TYPE_CHECKING:
     from datamodel.soil.SensorReading import SensorReading
+    from database.DBFramework import DBFramework
 
 class GraphDBService:
     _graph: Graph | None = None
@@ -28,11 +29,11 @@ class GraphDBService:
         assert self._graph is not None
         self._graph.run('MATCH (n) DETACH DELETE n')
         
-    def insert_model(self, model: list[dict]) -> None:
+    def insert_model(self, model: list[dict], fw: DBFramework) -> None:
         assert self._graph is not None
         
         for obj in model:
-            self._insert_object(obj)
+            self._insert_object(obj, fw)
 
         for obj in model:
             self._create_relation(obj, model)
@@ -52,9 +53,15 @@ class GraphDBService:
         rel = Relationship(sensor_node, 'MEASURED', reading_node)
         self._graph.merge(rel)
 
-    def _insert_object(self, obj: dict) -> None:
+    def _insert_object(self, obj: dict, fw: DBFramework) -> None:
         assert self._graph is not None
         obj_type = obj['object_type']
+
+        if obj['object_type'] == 'SOIL:SENSOR_READING':
+            value = obj['data']['values']
+            del obj['data']['values']
+            fw.DB.active_tsdb.add_measurement(obj['uuid'], obj['data']['timestamp'], value)
+
         properties = {
             'id': obj['uuid'] if obj['object_type'] != 'SOIL:SENSOR_READING' else obj['mea_id'],
             'data': json.dumps(obj)
@@ -72,31 +79,15 @@ class GraphDBService:
                     from_node = self._graph.nodes.match(obj['object_type'], id=obj['uuid']).first()
                     to_node = self._graph.nodes.match(GraphDBService._get_label(target, model), id=target).first()
 
-                    if not from_node:
-                        print(f"[WARN] Source node with id {obj['uuid']} not found")
-                        return
-                    if not to_node:
-                        print(f"[WARN] Target node with id {target} not found")
-                        return
-
                     rel = Relationship(from_node, key, to_node)
                     self._graph.merge(rel)
         else:
             target = obj['sensor']
-            print(obj)
-            from_node = self._graph.nodes.match(obj['object_type'], id=obj['mea_id']).first()
-            to_node = self._graph.nodes.match(GraphDBService._get_label(target, model), id=target).first()
-
-            if not from_node:
-                print(f"[WARN] Source node with id {obj['id']} not found")
-                return
-            if not to_node:
-                print(f"[WARN] Target node with id {target} not found")
-                return
+            from_node = self._graph.nodes.match(GraphDBService._get_label(target, model), id=target).first()
+            to_node = self._graph.nodes.match(obj['object_type'], id=obj['mea_id']).first()
 
             rel = Relationship(from_node, 'MEASURED', to_node)
             self._graph.merge(rel) 
-
 
     @staticmethod
     def _get_label(uuid: str, model: list[dict]) -> str | None:
