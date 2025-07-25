@@ -28,6 +28,7 @@ class GraphDBService:
         assert self._graph is not None
         self._graph.run('MATCH (n) DETACH DELETE n') # Clear old model
         
+    # FIXME: DATEMODELL VERSION INSTEAD OF SOIL VERSION
     def insert_model(self, model: list[dict]) -> None:
         assert self._graph is not None
         
@@ -88,3 +89,7 @@ class GraphDBService:
                 return obj['object_type']
             
         return None
+    
+    def run(self, query: str, **parameters):
+        assert self._graph is not None
+        return self._graph.run(query, parameters=parameters).data()
