@@ -16,7 +16,8 @@ class ProductionObject:
     _model: Model
 
     def add_attr_raw(self, attributes: dict[str, Any]) -> None:
-        self.__attributes = attributes
+        for key in attributes.keys():
+            self.__attributes[key] = attributes[key]['value']
 
     def add_ref_raw(self, ref: dict[str, set[str]]) -> None:
         self.__references = ref
