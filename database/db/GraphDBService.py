@@ -24,9 +24,12 @@ class GraphDBService:
         assert self._graph is not None
         self._graph = None
 
-    def insert_model(self, model: list[dict]) -> None:
+    def clear_model(self) -> None:
         assert self._graph is not None
         self._graph.run('MATCH (n) DETACH DELETE n') # Clear old model
+        
+    def insert_model(self, model: list[dict]) -> None:
+        assert self._graph is not None
         
         for obj in model:
             self._insert_object(obj)

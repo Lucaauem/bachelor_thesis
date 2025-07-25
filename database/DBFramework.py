@@ -9,6 +9,7 @@ from datamodel.soil.SensorReading import SensorReading
 from datamodel.Model import Model
 from datamodel.soil.Component import Component
 from database.callbacks.CallbackHandler import CallbackHandler
+from database.Receiver import Receiver
 import json
 
 class DBFramework:
@@ -18,15 +19,17 @@ class DBFramework:
     _db_manager: DBManager
     _sensor_manager: SensorManager
     _callback_handler: CallbackHandler
+    _receiver: Receiver
     
     def __init__(self) -> None:
-        self._mqtt_clients = MqttClientManager(self.mqtt_received)
+        self._mqtt_clients = MqttClientManager(self._mqtt_received)
         self._validator = Validator()
         self._db_manager = DBManager()
         self._sensor_manager = SensorManager()
         self._callback_handler = CallbackHandler()
+        self._receiver = Receiver(self._db_manager)
 
-    def mqtt_received(self, msg: str) -> None:
+    def _mqtt_received(self, msg: str) -> None:
         sensor_data = self._sensor_manager.on_new_data(msg)
 
         if sensor_data is None:
@@ -73,6 +76,9 @@ class DBFramework:
     def launch(self) -> None:
         self._mqtt_clients.start_all()
 
+    def clear_model(self) -> None:
+        self._db_manager.active_graphdb.clear_model()
+
     def start_client(self, id: str) -> None:
         self._mqtt_clients.start_client(id)
 
@@ -91,3 +97,7 @@ class DBFramework:
     @property
     def MQTT(self) -> MqttClientManager:
         return self._mqtt_clients
+    
+    @property
+    def Receiver(self) -> Receiver:
+        return self._receiver
