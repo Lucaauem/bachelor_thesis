@@ -1,6 +1,8 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 from datamodel.soil.SensorReading import SensorReading
+from database.fetching.FetchStatus import FetchStatus
+from database.fetching.FetchOutput import FetchOutput
 import json
 
 if TYPE_CHECKING:
@@ -16,7 +18,11 @@ class Fetch:
         self._tsdb = self._fw.DB.active_tsdb
         self._graphdb = self._fw.DB.active_graphdb
 
-    def complete_model(self) -> list[dict]:
+    @staticmethod
+    def _output(data: Any, status: FetchStatus) -> dict:
+        return {'status':status, 'data':data}
+
+    def complete_model(self) -> FetchOutput:
         self._get_current_dbs()
 
         data = []
@@ -37,4 +43,4 @@ class Fetch:
 
             data.append(node)
         
-        return data
+        return FetchOutput(data, FetchStatus.OK)

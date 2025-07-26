@@ -9,7 +9,7 @@ from datamodel.soil.SensorReading import SensorReading
 from datamodel.Model import Model
 from datamodel.soil.Component import Component
 from database.callbacks.CallbackHandler import CallbackHandler
-from database.Fetch import Fetch
+from database.fetching.Fetch import Fetch
 import json
 
 class DBFramework:
