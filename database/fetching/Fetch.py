@@ -21,6 +21,10 @@ class Fetch:
     @staticmethod
     def _output(data: Any, status: FetchStatus) -> dict:
         return {'status':status, 'data':data}
+    
+    # TODO: Validation
+    def _create_output(self, data: Any) -> FetchOutput:
+        return FetchOutput(data, FetchStatus.OK)
 
     def complete_model(self) -> FetchOutput:
         self._get_current_dbs()
@@ -43,4 +47,25 @@ class Fetch:
 
             data.append(node)
         
-        return FetchOutput(data, FetchStatus.OK)
+        return self._create_output(data)
+
+    def single_step(self, index:int=-1) -> FetchOutput:
+        ...
+
+    def sensor_mea(self, id:str='') -> FetchOutput:
+        ...
+
+    def components(self, id:str='', step:str='', shopfloor:str='', include_mea:bool=False) -> FetchOutput:
+        ...
+
+    def products(self, step:str='', include_specification:bool=False) -> FetchOutput:
+        ...
+
+    def batches(self, index:int=-1) -> FetchOutput:
+        ...
+
+    def invalid_datasets(self, include_components:bool=True, include_sensors:bool=True, limit:int=-1) -> FetchOutput:
+        ...
+
+    def virtual_sensors(self, sensor:str='', step:str='') -> FetchOutput:
+        ...
