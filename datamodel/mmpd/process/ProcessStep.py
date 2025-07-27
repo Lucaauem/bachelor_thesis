@@ -44,6 +44,10 @@ class ProcessStep(ProductionObject):
     def next_step(self, next: ProcessStep) -> None:
         self._uuid_next = next.uuid
         self._add_reference(self._REF_NEXT_STEP, next)
+
+        if len(self._uuid_prev) == 0:
+            self.add_attribute('index', 0)
+
         next.previous_step = self
 
     @property
@@ -51,8 +55,10 @@ class ProcessStep(ProductionObject):
         return cast(ProcessStep | None, self._model.get_object(self._uuid_prev))
     @previous_step.setter
     def previous_step(self, previous: ProcessStep) -> None:
-        self._uuid_next = previous.uuid
+        self._uuid_prev = previous.uuid
         self._add_reference(self._REF_PREV_STEP, previous)
+
+        self.add_attribute('index', previous.attributes['index'] + 1)
 
     @property
     def operator(self) -> Operator | None:
