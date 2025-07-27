@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING, Any
 from datamodel.soil.SensorReading import SensorReading
 from database.fetching.FetchStatus import FetchStatus
 from database.fetching.FetchOutput import FetchOutput
+from database.DatasetType import DatasetType
 import json
 
 if TYPE_CHECKING:
@@ -10,6 +11,7 @@ if TYPE_CHECKING:
 
 class Fetch:
     _fw: DBFramework
+    _ignores_failed_validation: bool = False
 
     def __init__(self, fw_instance: DBFramework) -> None:
         self._fw = fw_instance
@@ -18,12 +20,15 @@ class Fetch:
         self._tsdb = self._fw.DB.active_tsdb
         self._graphdb = self._fw.DB.active_graphdb
 
-    @staticmethod
-    def _output(data: Any, status: FetchStatus) -> dict:
-        return {'status':status, 'data':data}
-    
-    # TODO: Validation
-    def _create_output(self, data: Any) -> FetchOutput:
+    def ignore_failed_validation(self, ignore: bool) -> None:
+        self._ignores_failed_validation = ignore
+
+    def _create_output(self, data: str, data_type:DatasetType) -> FetchOutput:
+        if not self._fw.Validator.validate(data, data_type):
+            if self._ignores_failed_validation:
+                return FetchOutput(data, FetchStatus.WARNING)
+            return FetchOutput(None, FetchStatus.FAILED)
+            
         return FetchOutput(data, FetchStatus.OK)
 
     def complete_model(self) -> FetchOutput:
@@ -46,8 +51,9 @@ class Fetch:
                 node['data']['values'] = self._tsdb.get_measurement_data(reading)
 
             data.append(node)
+
         
-        return self._create_output(data)
+        return self._create_output(json.dumps(data), DatasetType.DATAMODEL)
 
     def single_step(self, index:int=-1) -> FetchOutput:
         ...
