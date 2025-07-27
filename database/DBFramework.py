@@ -10,6 +10,7 @@ from datamodel.Model import Model
 from datamodel.soil.Component import Component
 from database.callbacks.CallbackHandler import CallbackHandler
 from database.fetching.Fetch import Fetch
+from database.callbacks.Events import Events as CallbackEvents
 import json
 
 class DBFramework:
@@ -23,11 +24,16 @@ class DBFramework:
     
     def __init__(self) -> None:
         self._mqtt_clients = MqttClientManager(self._mqtt_received)
-        self._validator = Validator()
+        self._validator = Validator(self)
         self._db_manager = DBManager()
         self._sensor_manager = SensorManager(self._db_manager)
         self._callback_handler = CallbackHandler()
         self._fetch = Fetch(self)
+
+        self._callback_handler.trigger(CallbackEvents.STARTUP)
+
+    def __del__(self):
+        self._callback_handler.trigger(CallbackEvents.SHUTDOWN)
 
     def _mqtt_received(self, msg: str) -> None:
         is_correct, uuid, data = self._sensor_manager.is_correct_reading(msg)
@@ -51,7 +57,9 @@ class DBFramework:
         # TODO Validation
 
         log(f'Sensor [{uuid}]: Stored measurement!')
+        self._callback_handler.trigger(CallbackEvents.NEW_SENSOR_READING)
 
+    # TODO Set to default model update method
     def set_model(self, model: str) -> None:
         log('Datamodel: Validating...')
         if not self._validator.validate(model, DatasetType.DATAMODEL):
@@ -68,6 +76,8 @@ class DBFramework:
         for obj in parsed_model:
             if obj['object_type'] == 'SOIL:COMPONENT' and obj['component_type'] == ComponentType.REAL.name:
                 self._sensor_manager.add_sensor(obj['data'])
+
+        self._callback_handler.trigger(CallbackEvents.MODEL_UPDATE)
 
     def launch(self) -> None:
         self._mqtt_clients.start_all()
