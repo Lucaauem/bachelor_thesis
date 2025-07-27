@@ -63,8 +63,27 @@ class Fetch:
     def components(self, id:str='', step:str='', shopfloor:str='', include_mea:bool=False) -> FetchOutput:
         ...
 
+    # TODO: Step selection
     def products(self, step:str='', include_specification:bool=False) -> FetchOutput:
-        ...
+        self._get_current_dbs()
+
+        data=[]
+        for node in self._graphdb.macht_label('MMPD:PRODUCT'):
+            if node is None:
+                continue
+            
+            node = json.loads(dict(node)['data'])
+            data.append(node)
+            
+            if include_specification:
+                for product in self._graphdb.run('MATCH (a)-[:PRODUCT_SPECIFICATION]->(b) RETURN b', uuid=node['uuid']):
+                    if product['b'] is None: continue
+                    prod = product['b'].get('data')
+                    assert(isinstance(prod, str))
+                    data.append(json.loads(prod))
+
+        return self._create_output(data, DatasetType.DATAMODEL)
+
 
     def batches(self, include_products:bool=True) -> FetchOutput:
         self._get_current_dbs()
