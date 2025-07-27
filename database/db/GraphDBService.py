@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from py2neo import Graph, Node, Relationship
+from py2neo import Graph, Node, Relationship, NodeMatcher
 from database.Log import log
 import json
 
@@ -100,3 +100,8 @@ class GraphDBService:
     def run(self, query: str, **parameters):
         assert self._graph is not None
         return self._graph.run(query, parameters=parameters).data()
+    
+    def macht_label(self, label: str):
+        assert self._graph is not None
+        matcher = NodeMatcher(self._graph)
+        return matcher.match(label)

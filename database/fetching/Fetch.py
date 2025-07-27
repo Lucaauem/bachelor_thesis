@@ -23,8 +23,8 @@ class Fetch:
     def ignore_failed_validation(self, ignore: bool) -> None:
         self._ignores_failed_validation = ignore
 
-    def _create_output(self, data: str, data_type:DatasetType) -> FetchOutput:
-        if not self._fw.Validator.validate(data, data_type):
+    def _create_output(self, data: Any, data_type:DatasetType) -> FetchOutput:
+        if not self._fw.Validator.validate(json.dumps(data), data_type):
             if self._ignores_failed_validation:
                 return FetchOutput(data, FetchStatus.WARNING)
             return FetchOutput(None, FetchStatus.FAILED)
@@ -35,7 +35,6 @@ class Fetch:
         self._get_current_dbs()
 
         data = []
-
         query_data = self._graphdb.run('MATCH (n) RETURN n')
         for obj in query_data:
             node = obj["n"]
@@ -53,7 +52,7 @@ class Fetch:
             data.append(node)
 
         
-        return self._create_output(json.dumps(data), DatasetType.DATAMODEL)
+        return self._create_output(data, DatasetType.DATAMODEL)
 
     def single_step(self, index:int=-1) -> FetchOutput:
         ...
@@ -67,8 +66,26 @@ class Fetch:
     def products(self, step:str='', include_specification:bool=False) -> FetchOutput:
         ...
 
-    def batches(self, index:int=-1) -> FetchOutput:
-        ...
+    def batches(self, include_products:bool=True) -> FetchOutput:
+        self._get_current_dbs()
+
+        data = []
+        for node in self._graphdb.macht_label('MMPD:BATCH'):
+            if node is None:
+                continue
+
+            node = dict(node)['data']
+            node = json.loads(str(node))
+            data.append(node)
+
+            if include_products:
+                for product in self._graphdb.run('MATCH (a {id: $uuid})-[:PRODUCTS]->(b) RETURN b', uuid=node['uuid']):
+                    if product['b'] is None: continue
+                    prod = product['b'].get('data')
+                    assert(isinstance(prod, str))
+                    data.append(json.loads(prod))
+        
+        return self._create_output(data, DatasetType.DATAMODEL)
 
     def invalid_datasets(self, include_components:bool=True, include_sensors:bool=True, limit:int=-1) -> FetchOutput:
         ...
