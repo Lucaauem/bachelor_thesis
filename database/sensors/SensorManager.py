@@ -35,6 +35,10 @@ class SensorManager:
             return (False, '', {})
         
         sensor_uuid = data['uuid'].split('/')[0] # TODO Split sensor components into multiple objects
+
+        if sensor_uuid not in self._sensors.keys():
+            return (False, '', {})
+        
         return (True, sensor_uuid, data)
 
     def _parse_data(self, data: str) -> dict:

@@ -1,8 +1,10 @@
+import os, sys
+import json
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from demo.model import create_model
 from database.DBFramework import DBFramework
 from database.callbacks.Events import Events as CallbackEvents
 from typing import Any, Callable
-import json
 
 def main():
     tests()
@@ -11,14 +13,16 @@ def main():
     app = DBFramework()
 
     # Framework configuration
-    tsdb = app.DB.add_tsdb('./components/databases/influx.toml')
-    graphdb = app.DB.add_graphdb('./components/databases/neo.toml')
+    tsdb = app.DB.add_tsdb('./demo/service_config/databases/influx.toml')
+    graphdb = app.DB.add_graphdb('./demo/service_config/databases/neo.toml')
     app.DB.set_tsdb(tsdb)
     app.DB.set_graphdb(graphdb)
     app.clear_model()
     app.set_model(json.dumps(model.serialize()))
-    #mqtt = app.MQTT.add_client('./components/mqtt/client.toml')
-    #app.launch()
+    app.MQTT.add_client('./demo/service_config/mqtt/client.toml')
+    app.launch()
+
+    return
 
     output = app.Fetch.components()
     print(output.status)
