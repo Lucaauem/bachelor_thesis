@@ -27,7 +27,7 @@ class DBFramework:
         self._validator = Validator(self)
         self._db_manager = DBManager()
         self._sensor_manager = SensorManager(self._db_manager)
-        self._callback_handler = CallbackHandler()
+        self._callback_handler = CallbackHandler(self)
         self._fetch = Fetch(self)
 
     def start(self) -> None:

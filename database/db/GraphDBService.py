@@ -1,8 +1,10 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 from py2neo import Graph, Node, Relationship, NodeMatcher
+from database.db.TSDBService import TSDBService
 from database.Log import log
 import json
+import datetime
 
 if TYPE_CHECKING:
     from datamodel.soil.SensorReading import SensorReading
@@ -37,6 +39,17 @@ class GraphDBService:
 
         for obj in model:
             self._create_relation(obj, model)
+
+    def add_invalid_dataset(self, dataset: Any) -> None:
+        assert self._graph is not None
+
+        node = {
+            'id' : f'INV_{datetime.datetime.now()}',
+            'data': dataset
+        }
+
+        node = Node('INVALID', **node)
+        self._graph.merge(node, 'INVALID', 'id')
 
     def add_sensor_reading(self, reading: SensorReading) -> None:
         assert self._graph is not None
