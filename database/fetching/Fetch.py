@@ -54,8 +54,35 @@ class Fetch:
         
         return self._create_output(data, DatasetType.DATAMODEL)
 
-    def single_step(self, index:int=-1) -> FetchOutput:
-        ...
+    def steps(self, index:int=-1) -> FetchOutput:
+        self._get_current_dbs()
+
+        data=[]
+        for node in self._graphdb.macht_label('MMPD:PROCESSSTEP'):
+            if node is None:
+                continue
+
+            step_node = dict(node)
+            step_data = json.loads(step_node['data'])
+
+            if (step_data['attributes']['index']['value'] != index) and (index != -1):
+                continue
+
+            data.append(step_data)
+
+            for ref in step_data['references'].keys():
+                if (ref == 'NEXT') or (ref == 'PREVIOUS'): continue
+
+                for ref_node in self._graphdb.run('MATCH (a {id: $uuid})-[:' + ref + ']->(b) RETURN b', uuid=step_data['uuid']):
+                    if ref_node['b'] is None: continue
+                    ref_data = ref_node['b'].get('data')
+                    assert(isinstance(ref_data, str))
+                    data.append(json.loads(ref_data))
+
+            if index != -1:
+                break
+
+        return self._create_output(data, DatasetType.DATAMODEL)
 
     def sensor_mea(self, id:str='') -> FetchOutput:
         ...
@@ -64,7 +91,7 @@ class Fetch:
         ...
 
     # TODO: Step selection
-    def products(self, step:str='', include_specification:bool=False) -> FetchOutput:
+    def products(self, step:int=-1, include_specification:bool=False) -> FetchOutput:
         self._get_current_dbs()
 
         data=[]

@@ -95,9 +95,9 @@ def create_model() -> Model:
     process_step_0 = ProcessStep('PS_1', model)
     process_step_specification_0 = ProcessStepSpecification('PSP_1', model)
     process_step_specification_0.set_attributes(duration=60)
-    process_step_specification_0.add_to_step(process_step_0)
 
-    operator.add_to_step(process_step_0)
+    process_step_0.specification = process_step_specification_0
+    process_step_0.operator = operator
     pre_product_0.add_to_step(process_step_0)
     product_0.add_to_step(process_step_0)
     process_step_0.machine = machine_0
@@ -106,9 +106,9 @@ def create_model() -> Model:
     process_step_1 = ProcessStep('PS_2', model)
     process_step_specification_1 = ProcessStepSpecification('PSP_2', model)
     process_step_specification_1.set_attributes(duration=30)
-    process_step_specification_1.add_to_step(process_step_1)
 
-    operator.add_to_step(process_step_1)
+    process_step_1.specification = process_step_specification_1
+    process_step_1.operator = operator
     pre_product_1.add_to_step(process_step_1)
     product_1.add_to_step(process_step_1)
     process_step_1.machine = machine_1
@@ -116,9 +116,9 @@ def create_model() -> Model:
     process_step_2 = ProcessStep('PS_3', model)
     process_step_specification_2 = ProcessStepSpecification('PSP_3', model)
     process_step_specification_2.set_attributes(duration=360)
-    process_step_specification_2.add_to_step(process_step_2)
 
-    operator.add_to_step(process_step_2)
+    process_step_2.specification = process_step_specification_2
+    process_step_2.operator = operator
     pre_product_2.add_to_step(process_step_2)
     product_2.add_to_step(process_step_2)
     process_step_2.machine = machine_2
