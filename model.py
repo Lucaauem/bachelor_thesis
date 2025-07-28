@@ -32,13 +32,12 @@ def create_model() -> Model:
     machine_2 = Machine('MACHINE_3', model)
     machine_2.set_attributes(age=2, usages=157)
 
-    # TODO Components
     machine_0.add_sensor(create_component('./demo/components/sensors/sensor_0.json', ComponentType.REAL, model))
-    machine_0.add_tool(create_component('./demo/components/sensors/tool_0.json', ComponentType.TOOL, model))
+    machine_0.add_tool(create_component('./demo/components/tools/tool_0.json', ComponentType.TOOL, model))
     machine_1.add_sensor(create_component('./demo/components/sensors/sensor_1.json', ComponentType.REAL, model))
-    machine_1.add_tool(create_component('./demo/components/sensors/tool_1.json', ComponentType.TOOL, model))
+    machine_1.add_tool(create_component('./demo/components/tools/tool_1.json', ComponentType.TOOL, model))
     machine_2.add_sensor(create_component('./demo/components/sensors/sensor_2.json', ComponentType.REAL, model))
-    machine_2.add_tool(create_component('./demo/components/sensors/tool_2.json', ComponentType.TOOL, model))
+    machine_2.add_tool(create_component('./demo/components/tools/tool_2.json', ComponentType.TOOL, model))
 
     shopfloor_0.add_machine(machine_0)
     shopfloor_0.add_machine(machine_1)
