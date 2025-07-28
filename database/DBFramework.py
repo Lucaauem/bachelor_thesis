@@ -30,6 +30,7 @@ class DBFramework:
         self._callback_handler = CallbackHandler()
         self._fetch = Fetch(self)
 
+    def start(self) -> None:
         self._callback_handler.trigger(CallbackEvents.STARTUP)
 
     def __del__(self):
