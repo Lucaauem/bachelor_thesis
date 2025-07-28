@@ -87,8 +87,20 @@ class Fetch:
     def sensor_mea(self, id:str='') -> FetchOutput:
         ...
 
+    # TODO: Step, shopflor, mea selection
     def components(self, id:str='', step:str='', shopfloor:str='', include_mea:bool=False) -> FetchOutput:
-        ...
+        self._get_current_dbs()
+        data = []
+        
+        for node in self._graphdb.macht_label('SOIL:COMPONENT'):
+            if node is None: continue
+            node_data = json.loads(dict(node)['data'])
+            if len(id) > 0 and node_data['uuid'] != id:
+                continue
+
+            data.append(node_data)
+
+        return self._create_output(data, DatasetType.DATAMODEL)
 
     # TODO: Step selection
     def products(self, step:int=-1, include_specification:bool=False) -> FetchOutput:
