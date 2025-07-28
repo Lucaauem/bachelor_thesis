@@ -1,0 +1,20 @@
+{
+    "uuid": "COM-APIRadian",
+    "name": "SENSOR_0",
+    "description": "",
+    "profile": "Lasertracker",
+    "measurements": [{
+        "uuid": "MEA-Position",
+        "name": "Position",
+        "description": "",
+        "profile": "BasePosition",
+        "datatype": "float",
+        "unit": "unit:M",
+        "dimension": [3],
+        "range": [-100, 100],
+        "value": [ 0 , 0 , 0 ]
+    }],
+    "parameters": [],
+    "functions": [],
+    "components": []
+}

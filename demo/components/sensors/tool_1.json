@@ -1,0 +1,10 @@
+{
+    "uuid": "TOOL_1",
+    "name": "TOOL_1",
+    "description": "Demo Tool",
+    "profile": "Welder",
+    "measurements": [],
+    "parameters": [],
+    "functions": [],
+    "components": []
+}

@@ -1,0 +1,31 @@
+{
+    "uuid": "TOOL_2",
+    "name": "TOOL_2",
+    "description": "Demo Tool",
+    "profile": "Bender",
+    "measurements": [],
+    "parameters": [],
+    "functions": [],
+    "components": [
+        {
+            "uuid": "COM-Pressure",
+            "name": "SENSOR_2",
+            "description": "",
+            "profile": "Pressure",
+            "measurements": [{
+                "uuid": "MEA-Pressure",
+                "name": "Pressure",
+                "description": "",
+                "profile": "Pressure",
+                "datatype": "float",
+                "unit": "UNITLESS",
+                "dimension": [2],
+                "range": [0, 255],
+                "value": [ 0, 0 ]
+            }],
+            "parameters": [],
+            "functions": [],
+            "components": []
+        }
+    ]
+}

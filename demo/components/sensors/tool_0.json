@@ -1,0 +1,10 @@
+{
+    "uuid": "TOOL_0",
+    "name": "TOOL_0",
+    "description": "Demo Tool",
+    "profile": "Drill",
+    "measurements": [],
+    "parameters": [],
+    "functions": [],
+    "components": []
+}

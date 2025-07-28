@@ -12,6 +12,12 @@ from datamodel.mmpd.resource.Machine import Machine
 from datamodel.mmpd.resource.ShopFloor import ShopFloor
 from datamodel.Model import Model
 
+def create_component(path: str, type: ComponentType, model: Model) -> Component:
+    with open(path) as f:
+        data = f.read()
+    
+    return Component(data, type, model=model)
+
 def create_model() -> Model:
     model = Model()
 
@@ -27,6 +33,12 @@ def create_model() -> Model:
     machine_2.set_attributes(age=2, usages=157)
 
     # TODO Components
+    machine_0.add_sensor(create_component('./demo/components/sensors/sensor_0.json', ComponentType.REAL, model))
+    machine_0.add_tool(create_component('./demo/components/sensors/tool_0.json', ComponentType.TOOL, model))
+    machine_1.add_sensor(create_component('./demo/components/sensors/sensor_1.json', ComponentType.REAL, model))
+    machine_1.add_tool(create_component('./demo/components/sensors/tool_1.json', ComponentType.TOOL, model))
+    machine_2.add_sensor(create_component('./demo/components/sensors/sensor_2.json', ComponentType.REAL, model))
+    machine_2.add_tool(create_component('./demo/components/sensors/tool_2.json', ComponentType.TOOL, model))
 
     shopfloor_0.add_machine(machine_0)
     shopfloor_0.add_machine(machine_1)
