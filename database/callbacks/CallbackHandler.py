@@ -18,7 +18,7 @@ class CallbackHandler:
             self._callbacks[event] = []
 
         # Default events
-        self._callbacks[CallEvent.INVALID_DATASET].append(lambda data: self._fw.DB.active_graphdb.add_invalid_dataset(data))
+        self._callbacks[CallEvent.INVALID_DATASET].append(lambda data, type: self._fw.DB.active_graphdb.add_invalid_dataset(data, type))
 
     def add(self, function: Callable, event: CallEvent) -> None:
         self._callbacks[event].append(function)

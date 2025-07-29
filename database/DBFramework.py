@@ -45,7 +45,6 @@ class DBFramework:
         assert (sensor := self._model.get_object(uuid)) is not None and isinstance(sensor, Component)
 
         if not self._validator.validate(json.dumps(data), DatasetType.SOIL_DATA):
-            self._db_manager.active_graphdb.add_invalid_dataset(json.dumps(data))
             log(f'Sensor [{uuid}]: Invalid measurement!')
             return
 

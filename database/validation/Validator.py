@@ -26,6 +26,6 @@ class Validator:
         status = all(rule.validate(data, type) for rule in self._rules)
 
         if not status:
-            self._fw.Callbacks.trigger(CallbackEvents.INVALID_DATASET, data=data)
+            self._fw.Callbacks.trigger(CallbackEvents.INVALID_DATASET, data=data, type=type)
             
         return status

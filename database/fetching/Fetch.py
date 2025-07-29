@@ -23,7 +23,10 @@ class Fetch:
     def ignore_failed_validation(self, ignore: bool) -> None:
         self._ignores_failed_validation = ignore
 
-    def _create_output(self, data: Any, data_type:DatasetType) -> FetchOutput:
+    def _create_output(self, data: Any, data_type:DatasetType|None) -> FetchOutput:
+        if data_type is None:
+            return FetchOutput(data, FetchStatus.OK)
+        
         if not self._fw.Validator.validate(json.dumps(data), data_type):
             if self._ignores_failed_validation:
                 return FetchOutput(data, FetchStatus.WARNING)
@@ -62,8 +65,7 @@ class Fetch:
             if node is None:
                 continue
 
-            step_node = dict(node)
-            step_data = json.loads(step_node['data'])
+            step_data = json.loads(str(node.get('data')))
 
             if (step_data['attributes']['index']['value'] != index) and (index != -1):
                 continue
@@ -94,7 +96,7 @@ class Fetch:
         
         for node in self._graphdb.macht_label('SOIL:COMPONENT'):
             if node is None: continue
-            node_data = json.loads(dict(node)['data'])
+            node_data = json.loads(str(node.get('data')))
             if len(id) > 0 and node_data['uuid'] != id:
                 continue
 
@@ -111,7 +113,7 @@ class Fetch:
             if node is None:
                 continue
             
-            node = json.loads(dict(node)['data'])
+            node = json.loads(str(node.get('data')))
             data.append(node)
             
             if include_specification:
@@ -145,8 +147,22 @@ class Fetch:
         
         return self._create_output(data, DatasetType.DATAMODEL)
 
-    def invalid_datasets(self, include_components:bool=True, include_sensors:bool=True, limit:int=-1) -> FetchOutput:
-        ...
+    def invalid_datasets(self, ignore_model_data:bool=False, ignore_sensor_data:bool=False, limit:int=-1) -> FetchOutput:
+        self._get_current_dbs()
+        data = []
 
+        for node in self._graphdb.macht_label('INVALID', limit):
+            if node is None: continue
+
+            node_data = json.loads(str(node.get('data')))
+
+            if (node.get('type') == 'SOIL_DATA') and not ignore_sensor_data:
+                data.append(node_data)
+
+            if (node.get('type') == 'DATAMODEL') and not ignore_model_data:
+                data.append(node_data)
+
+        return self._create_output(data, None)
+    
     def virtual_sensors(self, sensor:str='', step:str='') -> FetchOutput:
         ...

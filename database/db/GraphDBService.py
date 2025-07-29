@@ -9,6 +9,7 @@ import datetime
 if TYPE_CHECKING:
     from datamodel.soil.SensorReading import SensorReading
     from database.DBFramework import DBFramework
+    from database.DatasetType import DatasetType
 
 class GraphDBService:
     _graph: Graph | None = None
@@ -40,12 +41,13 @@ class GraphDBService:
         for obj in model:
             self._create_relation(obj, model)
 
-    def add_invalid_dataset(self, dataset: Any) -> None:
+    def add_invalid_dataset(self, dataset: Any, type: DatasetType) -> None:
         assert self._graph is not None
 
         node = {
             'id' : f'INV_{datetime.datetime.now()}',
-            'data': dataset
+            'data': dataset,
+            'type': type.name
         }
 
         node = Node('INVALID', **node)
@@ -114,7 +116,10 @@ class GraphDBService:
         assert self._graph is not None
         return self._graph.run(query, parameters=parameters).data()
     
-    def macht_label(self, label: str):
+    def macht_label(self, label: str, limit:int=-1):
         assert self._graph is not None
-        matcher = NodeMatcher(self._graph)
-        return matcher.match(label)
+
+        limit_str = '' if limit < 0 else f'LIMIT {limit}'
+        result = self.run(f'MATCH (n:{label}) RETURN n ORDER BY id(n) DESC {limit_str}')
+        nodes = [record['n'] for record in result]
+        return nodes
