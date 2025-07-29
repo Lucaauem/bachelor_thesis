@@ -48,7 +48,7 @@ class Fetch:
             node = dict(node)['data']
             node = json.loads(str(node))
 
-            if node['object_type'] == 'SOIL:SENSOR_READING':
+            if node['object_type'] == 'SOIL_SENSOR_READING':
                 reading = SensorReading(json.dumps(node['data']))
                 node['data']['values'] = self._tsdb.get_measurement_data(reading)
 
@@ -61,7 +61,7 @@ class Fetch:
         self._get_current_dbs()
 
         data=[]
-        for node in self._graphdb.macht_label('MMPD:PROCESSSTEP'):
+        for node in self._graphdb.macht_label('MMPD_PROCESSSTEP'):
             if node is None:
                 continue
 
@@ -93,8 +93,8 @@ class Fetch:
     def components(self, id:str='', step:str='', shopfloor:str='', include_mea:bool=False) -> FetchOutput:
         self._get_current_dbs()
         data = []
-        
-        for node in self._graphdb.macht_label('SOIL:COMPONENT'):
+
+        for node in self._graphdb.macht_label('SOIL_COMPONENT'):
             if node is None: continue
             node_data = json.loads(str(node.get('data')))
             if len(id) > 0 and node_data['uuid'] != id:
@@ -109,7 +109,7 @@ class Fetch:
         self._get_current_dbs()
 
         data=[]
-        for node in self._graphdb.macht_label('MMPD:PRODUCT'):
+        for node in self._graphdb.macht_label('MMPD_PRODUCT'):
             if node is None:
                 continue
             
@@ -125,12 +125,11 @@ class Fetch:
 
         return self._create_output(data, DatasetType.DATAMODEL)
 
-
     def batches(self, include_products:bool=True) -> FetchOutput:
         self._get_current_dbs()
 
         data = []
-        for node in self._graphdb.macht_label('MMPD:BATCH'):
+        for node in self._graphdb.macht_label('MMPD_BATCH'):
             if node is None:
                 continue
 

@@ -25,7 +25,7 @@ class SensorReading:
             'uuid': self._data['uuid'],
             'mea_id': self._mea_id,
             'data': self._data.copy(),
-            'object_type' : 'SOIL:SENSOR_READING',
+            'object_type' : 'SOIL_SENSOR_READING',
             'sensor': self._sensor.uuid
         }
 

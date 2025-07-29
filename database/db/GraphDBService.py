@@ -61,9 +61,9 @@ class GraphDBService:
             'data' : json.dumps(reading.serialize())
         }
 
-        sensor_node = self._graph.nodes.match('SOIL:COMPONENT', id=reading.sensor.uuid).first()
-        reading_node = Node('SOIL:SENSOR_READING', **node_data)
-        self._graph.merge(reading_node, 'SOIL:SENSOR_READING', 'id')
+        sensor_node = self._graph.nodes.match('SOIL_COMPONENT', id=reading.sensor.uuid).first()
+        reading_node = Node('SOIL_SENSOR_READING', **node_data)
+        self._graph.merge(reading_node, 'SOIL_SENSOR_READING', 'id')
 
         rel = Relationship(sensor_node, 'MEASURED', reading_node)
         self._graph.merge(rel)
@@ -72,13 +72,13 @@ class GraphDBService:
         assert self._graph is not None
         obj_type = obj['object_type']
 
-        if obj['object_type'] == 'SOIL:SENSOR_READING':
+        if obj['object_type'] == 'SOIL_SENSOR_READING':
             value = obj['data']['values']
             del obj['data']['values']
             fw.DB.active_tsdb.add_measurement(obj['uuid'], obj['data']['timestamp'], value)
 
         properties = {
-            'id': obj['uuid'] if obj['object_type'] != 'SOIL:SENSOR_READING' else obj['mea_id'],
+            'id': obj['uuid'] if obj['object_type'] != 'SOIL_SENSOR_READING' else obj['mea_id'],
             'data': json.dumps(obj)
         }
 
@@ -88,7 +88,7 @@ class GraphDBService:
     def _create_relation(self, obj, model) -> None:
         assert self._graph is not None
 
-        if obj['object_type'] != 'SOIL:SENSOR_READING':
+        if obj['object_type'] != 'SOIL_SENSOR_READING':
             for key in obj['references']:
                 for target in obj['references'][key]:
                     from_node = self._graph.nodes.match(obj['object_type'], id=obj['uuid']).first()

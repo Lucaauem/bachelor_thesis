@@ -76,7 +76,7 @@ class DBFramework:
         log('Datamodel: Updated!')
         log('Datamodel: Loading sensors...')
         for obj in model:
-            if (obj['object_type'] == 'SOIL:COMPONENT') and (obj['component_type'] == ComponentType.REAL.name):
+            if (obj['object_type'] == 'SOIL_COMPONENT') and (obj['component_type'] == ComponentType.REAL.name):
                 self._sensor_manager.add_sensor(obj['data'])
 
         self._callback_handler.trigger(CallbackEvents.MODEL_UPDATE)

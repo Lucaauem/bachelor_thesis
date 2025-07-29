@@ -21,15 +21,15 @@ if TYPE_CHECKING:
     from datamodel.soil.SensorReading import SensorReading
 
 PARSE_CONVERSION = {
-    'MMPD:OPERATOR' : lambda: Operator,
-    'MMPD:PROCESSSTEP' : lambda: ProcessStep,
-    'MMPD:PROCESSSTEPSPECIFICATION' : lambda:ProcessStepSpecification,
-    'MMPD:BATCH' : lambda:Batch,
-    'MMPD:PREPRODUCT' : lambda:PreProduct,
-    'MMPD:PRODUCT' : lambda:Product,
-    'MMPD:PRODUCTSPECIFICATION' : lambda:ProductSpecification,
-    'MMPD:MACHINE' : lambda:Machine,
-    'MMPD:SHOPFLOOR' : lambda:ShopFloor,
+    'MMPD_OPERATOR' : lambda: Operator,
+    'MMPD_PROCESSSTEP' : lambda: ProcessStep,
+    'MMPD_PROCESSSTEPSPECIFICATION' : lambda:ProcessStepSpecification,
+    'MMPD_BATCH' : lambda:Batch,
+    'MMPD_PREPRODUCT' : lambda:PreProduct,
+    'MMPD_PRODUCT' : lambda:Product,
+    'MMPD_PRODUCTSPECIFICATION' : lambda:ProductSpecification,
+    'MMPD_MACHINE' : lambda:Machine,
+    'MMPD_SHOPFLOOR' : lambda:ShopFloor,
 }
 
 class Model:
@@ -61,16 +61,16 @@ class Model:
         for obj in data:
             obj_type = obj['object_type']
 
-            if obj_type == 'SOIL:COMPONENT' :
+            if obj_type == 'SOIL_COMPONENT' :
                 Component(json.dumps(obj['data']), ComponentType[obj['component_type']], datamodel)
-            elif obj_type != 'SOIL:SENSOR_READING':
+            elif obj_type != 'SOIL_SENSOR_READING':
                 cls = PARSE_CONVERSION[obj_type]()
                 instance: ProductionObject = cls(obj['uuid'], datamodel)
                 instance.add_attr_raw(obj['attributes'])
                 instance.add_ref_raw(obj['references'])
 
         for mea in data:
-            if mea['object_type'] != 'SOIL:SENSOR_READING':
+            if mea['object_type'] != 'SOIL_SENSOR_READING':
                 continue
             
             sensor = datamodel.get_object(mea['sensor'])
