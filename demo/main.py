@@ -18,7 +18,7 @@ def main():
     app.DB.set_tsdb(tsdb)
     app.DB.set_graphdb(graphdb)
     app.clear_model()
-    app.set_model(json.dumps(model.serialize()))
+    app.update_model(model.serialize())
     app.MQTT.add_client('./demo/service_config/mqtt/client.toml')
     app.launch()
 

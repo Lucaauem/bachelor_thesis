@@ -44,7 +44,10 @@ class DBFramework:
             return
         assert (sensor := self._model.get_object(uuid)) is not None and isinstance(sensor, Component)
 
-        log(f'Sensor [{uuid}]: New measurement!')
+        if not self._validator.validate(json.dumps(data), DatasetType.SOIL_DATA):
+            self._db_manager.active_graphdb.add_invalid_dataset(json.dumps(data))
+            log(f'Sensor [{uuid}]: Invalid measurement!')
+            return
 
         # TODO: Move to add_measurement?
         value = data['value']
@@ -55,27 +58,26 @@ class DBFramework:
         self._sensor_manager.get_sensor(uuid).add_measurement(reading, value)
         sensor.add_reading(reading)
 
-        # TODO Validation
-
-        log(f'Sensor [{uuid}]: Stored measurement!')
+        log(f'Sensor [{uuid}]: New measurement!')
         self._callback_handler.trigger(CallbackEvents.NEW_SENSOR_READING)
 
-    # TODO Set to default model update method
-    def set_model(self, model: str) -> None:
+    def update_model(self, model: list[dict]) -> None:
+        log('Updating Datamodel...')
         log('Datamodel: Validating...')
-        if not self._validator.validate(model, DatasetType.DATAMODEL):
+
+        if not self._validator.validate(json.dumps(model), DatasetType.DATAMODEL):
             raise SyntaxError('Datamodel: Not valid!')
+        
+        log('Datamodel: Parsing...')
+        self._model = Model.parse(model)
 
-        log('Datamodel: Valid!')
         log('Datamodel: Storing in Database...')
-        parsed_model = json.loads(model)
-        self._model = Model.parse(parsed_model)
-        self._db_manager.active_graphdb.insert_model(self._model.serialize(), self)
-        log('Datamodel: Stored in Database!')
+        self._db_manager.active_graphdb.insert_model(model, self)
 
-        log('Sensors: Loading sensors from model...')
-        for obj in parsed_model:
-            if obj['object_type'] == 'SOIL:COMPONENT' and obj['component_type'] == ComponentType.REAL.name:
+        log('Datamodel: Updated!')
+        log('Datamodel: Loading sensors...')
+        for obj in model:
+            if (obj['object_type'] == 'SOIL:COMPONENT') and (obj['component_type'] == ComponentType.REAL.name):
                 self._sensor_manager.add_sensor(obj['data'])
 
         self._callback_handler.trigger(CallbackEvents.MODEL_UPDATE)

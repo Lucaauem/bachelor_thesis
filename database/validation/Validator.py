@@ -3,9 +3,9 @@ from typing import TYPE_CHECKING
 from database.validation.rules.CorrectFormat import CorrectFormat
 from database.callbacks.Events import Events as CallbackEvents
 
+from database.DatasetType import DatasetType
 if TYPE_CHECKING:
     from database.validation.ValidationRule import ValidationRule
-    from database.DatasetType import DatasetType
     from database.DBFramework import DBFramework
 
 class Validator:
