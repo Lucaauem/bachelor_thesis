@@ -32,6 +32,7 @@ class DBFramework:
 
     def start(self) -> None:
         self._callback_handler.trigger(CallbackEvents.STARTUP)
+        self._mqtt_clients.start_all()
 
     def __del__(self):
         self._callback_handler.trigger(CallbackEvents.SHUTDOWN)
@@ -58,9 +59,9 @@ class DBFramework:
         sensor.add_reading(reading)
 
         log(f'Sensor [{uuid}]: New measurement!')
-        self._callback_handler.trigger(CallbackEvents.NEW_SENSOR_READING)
+        self._callback_handler.trigger(CallbackEvents.NEW_SENSOR_READING, sensor_reading=reading.serialize())
 
-    def update_model(self, model: list[dict]) -> None:
+    def update_model(self, model: list[dict], trigger_callback:bool=True) -> None:
         log('Updating Datamodel...')
         log('Datamodel: Validating...')
 
@@ -79,10 +80,8 @@ class DBFramework:
             if (obj['object_type'] == 'SOIL_COMPONENT') and (obj['component_type'] == ComponentType.REAL.name):
                 self._sensor_manager.add_sensor(obj['data'])
 
-        self._callback_handler.trigger(CallbackEvents.MODEL_UPDATE)
-
-    def launch(self) -> None:
-        self._mqtt_clients.start_all()
+        if trigger_callback:
+            self._callback_handler.trigger(CallbackEvents.MODEL_UPDATE, model=model)
 
     def clear_model(self) -> None:
         self._db_manager.active_graphdb.clear_model()

@@ -20,7 +20,7 @@ class ProductionObject:
             self.__attributes[key] = attributes[key]['value']
 
     def add_ref_raw(self, ref: dict[str, set[str]]) -> None:
-        self.__references = ref
+        self.__references = {k: set(v) for k, v in ref.items()}
 
     def __init__(self, uuid: str, model: Model) -> None:
         self.__UUID = uuid
